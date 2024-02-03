@@ -4,8 +4,6 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Movement;
-import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.TeamElementSubsystem;
-import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.SplitAveragePipeline;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,15 +18,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 //import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvPipeline;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.List;
 
 /*
@@ -65,9 +55,8 @@ public class Auto_Blue_Close extends LinearOpMode {
     private DcMotor front_right;
     private DcMotor linearSlideMotor_Left;
     private DcMotor linearSlideMotor_Right;
+    private Servo claw;
     private Servo door;
-    private Servo arm;
-
 
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
@@ -101,8 +90,6 @@ public class Auto_Blue_Close extends LinearOpMode {
         front_left = hardwareMap.get(DcMotor.class, "front_left");
         back_left = hardwareMap.get(DcMotor.class, "back_left");
         back_right = hardwareMap.get(DcMotor.class, "back_right");
-        door = hardwareMap.get(Servo.class, "door");
-        arm = hardwareMap.get(Servo.class, "arm");
         double firstHalf = 300;
         init_Auto();
 
@@ -123,7 +110,10 @@ public class Auto_Blue_Close extends LinearOpMode {
 
 
 
-
+            if (prop_x == 0){
+                prop_x = detectProp();
+                detectProp();
+            }
 
 
             telemetry.update();
@@ -140,16 +130,32 @@ public class Auto_Blue_Close extends LinearOpMode {
             // Share the CPU.
             sleep(20);
 
-            if (TeamElementSubsystem.elementDetection(telemetry) == 1) {
-                leftProp();
-            }
-
-
-            if (TeamElementSubsystem.elementDetection(telemetry) == 2){
+            if( prop_x>firstHalf) {
                 centerProp();
             }
-            if (TeamElementSubsystem.elementDetection(telemetry) == 3){
-                rightProp();
+            //id_x = leftID_x();
+            //Movement.rotationRight(180, telemetry, back_left, back_right, front_left, front_right);
+
+            //     linearSlideMotor_Right.setTargetPosition(target_pos);
+            //     linearSlideMotor_Left.setTargetPosition(target_pos);
+            //     linearSlideMotor_Right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     linearSlideMotor_Left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     linearSlideMotor_Right.setPower(1); // Adjust power as needed
+            //     linearSlideMotor_Left.setPower(1); // Adjust power as needed
+            //     claw.setPosition(1);
+            //     door.setPosition(1);
+            //     linearSlideMotor_Right.setTargetPosition(0);
+            //     linearSlideMotor_Left.setTargetPosition(0);
+            //     linearSlideMotor_Right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     linearSlideMotor_Left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //     }
+
+            if(prop_x < firstHalf && prop_x!= 0){
+                leftProp();
+
+                //     Movement.left(108,telemetry, back_left, back_right, front_left, front_right);
+                //     id_x = centerID_x();
+                //     Movement.rotationRight(180, telemetry, back_left, back_right, front_left, front_right);
 
             }
             else {
@@ -388,14 +394,26 @@ public class Auto_Blue_Close extends LinearOpMode {
 // in this code you should assume that the prop is on the left.
         Movement.backward(70,telemetry, back_left, back_right, front_left, front_right);
         Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
-        //Movement.backward(5,telemetry, back_left, back_right, front_left, front_right);
+        Movement.backward(5,telemetry, back_left, back_right, front_left, front_right);
         Movement.forward(15, telemetry, back_left, back_right, front_left, front_right);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
         Movement.right(5,telemetry, back_left, back_right, front_left, front_right);
-        Movement.forward(65,telemetry, back_left, back_right, front_left, front_right);
+        Movement.forward(60,telemetry, back_left, back_right, front_left, front_right);
         Movement.right(5,telemetry, back_left, back_right, front_left, front_right);
         shiftShort();
 
+
+//the above code may be wrong for the right
+
+//scan
+        //Movement.left(20, telemetry, back_left, back_right, front_left, front_right);
+        //Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
+//raise lift
+/*
+linnearSlideMotor_Right.setPower(1);
+linnearSlideMotor_Left.setPower(1); */
+//Movement.backward(35, telemetry, back_left, back_right, front_left, front_right);
+//place pixel
 
     }
 
@@ -422,12 +440,10 @@ public class Auto_Blue_Close extends LinearOpMode {
 
 
     public void shiftShort(){
-        Movement.right( 61 , telemetry, back_left, back_right, front_left, front_right);
+        // in this code you should assume that the prop is on the left.
+        Movement.left( 61 , telemetry, back_left, back_right, front_left, front_right);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
         Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        arm.setPosition(-1);
-        door.setPosition(-1);
 
          /*
         linearSlideMotor_Right.setPower(1);

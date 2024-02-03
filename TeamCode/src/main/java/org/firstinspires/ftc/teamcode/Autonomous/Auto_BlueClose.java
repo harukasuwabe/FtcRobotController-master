@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.TeamElementSubsystem;
+
 import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.SplitAveragePipeline;
+
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,6 +22,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 //import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -29,6 +32,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.List;
 
 /*
@@ -55,7 +59,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "BlueCloseVisio", group = "Concept")
+@Autonomous(name = "BlueCloseVision", group = "Concept")
 
 public class Auto_BlueClose extends LinearOpMode {
 
