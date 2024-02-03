@@ -207,7 +207,22 @@ public class Movement {
         }
     }
 
+    public static void reset_linear_encoders(DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight) {
+        motorLinearSlideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLinearSlideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
-
+    public static void linearSlides(int ticks, Telemetry telemetry, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
+        reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
+        //SET TARGET POSITION
+        motorLinearSlideLeft.setTargetPosition((int)ticks);
+        motorLinearSlideRight.setTargetPosition((int)ticks);
+        //RUN TO POSITION
+        motorLinearSlideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorLinearSlideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //POWER
+        ((DcMotorEx) motorLinearSlideLeft).setVelocity(200);
+        ((DcMotorEx) motorLinearSlideRight).setVelocity(-200);
+    }
 }
 
