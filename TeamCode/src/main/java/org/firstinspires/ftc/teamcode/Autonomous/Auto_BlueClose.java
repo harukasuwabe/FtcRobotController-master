@@ -22,14 +22,20 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 //import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
+import org.firstinspires.ftc.teamcode.util.CustomTypes.AutonomousStates;
+import org.firstinspires.ftc.teamcode.util.VisionController;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,7 +77,11 @@ public class Auto_BlueClose extends LinearOpMode {
     private DcMotor linearSlideMotor_Right;
     private Servo door;
     private Servo arm;
-
+    private AutonomousStates previousState = null;
+    private AutonomousStates currentState = AutonomousStates.INIT;
+    private VisionController visionController;
+    private CustomTypes.PropLocation propLocation;
+    private ElapsedTime runtime;
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -87,6 +97,7 @@ public class Auto_BlueClose extends LinearOpMode {
 
     //The variable to store our instance of the TensorFlow Object Detection processor.
     private TfodProcessor tfod;
+    private int propNumber;
 
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "model_20240117_115245.tflite";
@@ -119,13 +130,29 @@ public class Auto_BlueClose extends LinearOpMode {
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
+        previousState = AutonomousStates.INIT;
+        currentState = AutonomousStates.START;
 
         waitForStart();
         if (opModeIsActive()) {
 
+            if(previousState == AutonomousStates.INIT) {
+                runtime.reset();
+                propLocation = visionController.getPropLocation();
 
-            telemetry.update();
-
+                switch (propLocation) {
+                    case LEFT:
+                        propNumber = 0;
+                        break;
+                    case MIDDLE:
+                        propNumber = 1;
+                        break;
+                    case RIGHT:
+                        propNumber = 2;
+                        break;
+                }
+                telemetry.update();
+            }
             // Push telemetry to the Driver Station.
 
             // Save CPU resources; can resume streaming when needed.
@@ -141,15 +168,15 @@ public class Auto_BlueClose extends LinearOpMode {
             Movement.linearSlides(100, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
 
 
-            if (TeamElementSubsystem.elementDetection(telemetry) == 1) {
+            if (propNumber== 1) {
                 leftProp();
             }
 
 
-            if (TeamElementSubsystem.elementDetection(telemetry) == 2) {
+            if (propNumber == 2) {
                 centerProp();
             }
-            if (TeamElementSubsystem.elementDetection(telemetry) == 3) {
+            if (propNumber == 3) {
                 rightProp();
 
             } else {
