@@ -21,15 +21,16 @@ public class Movement {
     // private static Servo claw;
 
     static double rotations;
+    static double ticks;
 
 
     public static void left(double distance, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
         rotations = distance * 21.74;
         // SET TARGET POSITION
-        motorFrontRight.setTargetPosition((int) -rotations);
-        motorFrontLeft.setTargetPosition((int) rotations);
-        motorBackLeft.setTargetPosition((int) -rotations);
+        motorFrontRight.setTargetPosition((int) rotations);
+        motorFrontLeft.setTargetPosition((int) -rotations);
+        motorBackLeft.setTargetPosition((int) rotations);
         motorBackRight.setTargetPosition((int) -rotations);
         // RUN TO POSITION
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -37,12 +38,12 @@ public class Movement {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // POWER (left slide)
-        ((DcMotorEx) motorFrontRight).setVelocity(-1000);
-        ((DcMotorEx) motorFrontLeft).setVelocity(1000);
-        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
+        ((DcMotorEx) motorFrontRight).setVelocity(1000);
+        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
+        ((DcMotorEx) motorBackLeft).setVelocity(1000);
         ((DcMotorEx) motorBackRight).setVelocity(-1000);
         while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function", "left");
+            telemetry.addData("function", "left");
             motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
             telemetry.update();
         }
@@ -55,9 +56,9 @@ public class Movement {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
         rotations = distance * 21.74;
         // SET TARGET POSITION
-        motorFrontRight.setTargetPosition((int) -rotations);
-        motorFrontLeft.setTargetPosition((int) -rotations);
-        motorBackLeft.setTargetPosition((int) -rotations);
+        motorFrontRight.setTargetPosition((int) rotations);
+        motorFrontLeft.setTargetPosition((int) rotations);
+        motorBackLeft.setTargetPosition((int) rotations);
         motorBackRight.setTargetPosition((int) rotations);
         // RUN TO POSITION
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -65,12 +66,12 @@ public class Movement {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // POWER (left slide)
-        ((DcMotorEx) motorFrontRight).setVelocity(-1000);
-        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
-        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
+        ((DcMotorEx) motorFrontRight).setVelocity(1000);
+        ((DcMotorEx) motorFrontLeft).setVelocity(1000);
+        ((DcMotorEx) motorBackLeft).setVelocity(1000);
         ((DcMotorEx) motorBackRight).setVelocity(1000);
         while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function","foward");
+            telemetry.addData("function", "forward...");
             motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
             telemetry.update();
         }
@@ -84,9 +85,9 @@ public class Movement {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
         rotations = distance * 21.74;
         // SET TARGET POSITION
-        motorFrontRight.setTargetPosition((int) rotations);
-        motorFrontLeft.setTargetPosition((int) rotations);
-        motorBackLeft.setTargetPosition((int) rotations);
+        motorFrontRight.setTargetPosition((int) -rotations);
+        motorFrontLeft.setTargetPosition((int) -rotations);
+        motorBackLeft.setTargetPosition((int) -rotations);
         motorBackRight.setTargetPosition((int) -rotations);
         // RUN TO POSITION
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -94,12 +95,12 @@ public class Movement {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // POWER (left slide)
-        ((DcMotorEx) motorFrontRight).setVelocity(1000);
-        ((DcMotorEx) motorFrontLeft).setVelocity(1000);
-        ((DcMotorEx) motorBackLeft).setVelocity(1000);
+        ((DcMotorEx) motorFrontRight).setVelocity(-1000);
+        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
+        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
         ((DcMotorEx) motorBackRight).setVelocity(-1000);
         while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function", "backward");
+            telemetry.addData("function", "backward");
             motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
             telemetry.update();
         }
@@ -112,9 +113,9 @@ public class Movement {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
         rotations = distance * 21.74;
         // SET TARGET POSITION
-        motorFrontRight.setTargetPosition((int) rotations);
-        motorFrontLeft.setTargetPosition((int) -rotations);
-        motorBackLeft.setTargetPosition((int) rotations);
+        motorFrontRight.setTargetPosition((int) -rotations);
+        motorFrontLeft.setTargetPosition((int) rotations);
+        motorBackLeft.setTargetPosition((int) -rotations);
         motorBackRight.setTargetPosition((int) rotations);
         // RUN TO POSITION
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -122,12 +123,12 @@ public class Movement {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         // POWER (left slide)
-        ((DcMotorEx) motorFrontRight).setVelocity(1000);
-        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
-        ((DcMotorEx) motorBackLeft).setVelocity(1000);
+        ((DcMotorEx) motorFrontRight).setVelocity(-1000);
+        ((DcMotorEx) motorFrontLeft).setVelocity(1000);
+        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
         ((DcMotorEx) motorBackRight).setVelocity(1000);
         while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function", "right");
+            telemetry.addData("function", "right");
             motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
             telemetry.update();
         }
@@ -142,15 +143,18 @@ public class Movement {
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-
+    public static void reset_linear_encoders(DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight) {
+        motorLinearSlideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorLinearSlideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
     /**
      * Describe this function...
      */
     public static void motor_telemetry(Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
-        //telemetry.addData("back left pos", motorBackLeft.getCurrentPosition());
-        //telemetry.addData("back right pos", motorBackRight.getCurrentPosition());
-        //telemetry.addData("front left pos", motorFrontLeft.getCurrentPosition());
-        //telemetry.addData("front right pos", motorFrontRight.getCurrentPosition());
+        telemetry.addData("back left pos", motorBackLeft.getCurrentPosition());
+        telemetry.addData("back right pos", motorBackRight.getCurrentPosition());
+        telemetry.addData("front left pos", motorFrontLeft.getCurrentPosition());
+        telemetry.addData("front right pos", motorFrontRight.getCurrentPosition());
         telemetry.update();
 
 
@@ -161,35 +165,10 @@ public class Movement {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
         rotations = degrees * 14;
         // SET TARGET POSITION
-        motorFrontRight.setTargetPosition((int) rotations);
-        motorFrontLeft.setTargetPosition((int) -rotations);
-        motorBackLeft.setTargetPosition((int) -rotations);
-        motorBackRight.setTargetPosition((int) -rotations);
-        // RUN TO POSITION
-        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        // POWER (left slide)
-        ((DcMotorEx) motorFrontRight).setVelocity(1000);
-        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
-        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
-        ((DcMotorEx) motorBackRight).setVelocity(-1000);
-        while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function", "rotation right");
-            motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-            telemetry.update();
-        }
-    }
-
-    public static void rotationLeft(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
-        reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-        rotations = degrees * 14;
-        // SET TARGET POSITION
         motorFrontRight.setTargetPosition((int) -rotations);
         motorFrontLeft.setTargetPosition((int) rotations);
         motorBackLeft.setTargetPosition((int) rotations);
-        motorBackRight.setTargetPosition((int) rotations);
+        motorBackRight.setTargetPosition((int) -rotations);
         // RUN TO POSITION
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -199,19 +178,38 @@ public class Movement {
         ((DcMotorEx) motorFrontRight).setVelocity(-1000);
         ((DcMotorEx) motorFrontLeft).setVelocity(1000);
         ((DcMotorEx) motorBackLeft).setVelocity(1000);
-        ((DcMotorEx) motorBackRight).setVelocity(1000);
+        ((DcMotorEx) motorBackRight).setVelocity(-1000);
         while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
-            //telemetry.addData("function", "rotation right");
+            telemetry.addData("function", "rotation right");
             motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
             telemetry.update();
         }
     }
 
-    public static void reset_linear_encoders(DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight) {
-        motorLinearSlideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorLinearSlideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public static void rotationLeft(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
+        reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
+        rotations = degrees * 14;
+        // SET TARGET POSITION
+        motorFrontRight.setTargetPosition((int) rotations);
+        motorFrontLeft.setTargetPosition((int) -rotations);
+        motorBackLeft.setTargetPosition((int) -rotations);
+        motorBackRight.setTargetPosition((int) rotations);
+        // RUN TO POSITION
+        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // POWER (left slide)
+        ((DcMotorEx) motorFrontRight).setVelocity(1000);
+        ((DcMotorEx) motorFrontLeft).setVelocity(-1000);
+        ((DcMotorEx) motorBackLeft).setVelocity(-1000);
+        ((DcMotorEx) motorBackRight).setVelocity(1000);
+        while (motorBackLeft.isBusy() && motorBackRight.isBusy() && motorFrontLeft.isBusy() && motorFrontRight.isBusy()) {
+            telemetry.addData("function", "rotation right");
+            motor_telemetry(telemetry, motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
+            telemetry.update();
+        }
     }
-
     public static void linearSlides(int ticks, Telemetry telemetry, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
         //SET TARGET POSITION
@@ -225,4 +223,9 @@ public class Movement {
         ((DcMotorEx) motorLinearSlideRight).setVelocity(-200);
     }
 }
+
+
+
+
+
 

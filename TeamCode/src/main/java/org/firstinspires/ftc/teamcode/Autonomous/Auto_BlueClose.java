@@ -1,45 +1,30 @@
-
-
 package org.firstinspires.ftc.teamcode.Autonomous;
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.teamcode.Movement;
-import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.TeamElementSubsystem;
-
-import org.firstinspires.ftc.teamcode.OpenCv.Open.cv.SplitAveragePipeline;
-
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-//import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.firstinspires.ftc.teamcode.util.CustomTypes;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.teamcode.util.CustomTypes.AutonomousStates;
 import org.firstinspires.ftc.teamcode.util.VisionController;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.util.Constants;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.openftc.easyopencv.OpenCvPipeline;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.util.Arrays;
-import java.util.List;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.List;
+import android.util.Size;
+
+
 
 /*
  * This OpMode illustrates the basics of AprilTag recognition and pose estimation,
@@ -80,10 +65,10 @@ public class Auto_BlueClose extends LinearOpMode {
     private AutonomousStates previousState = null;
     private AutonomousStates currentState = AutonomousStates.INIT;
     private VisionController visionController;
-    private CustomTypes.PropLocation propLocation;
+
     private ElapsedTime runtime;
 
-    private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
+    //private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
      * The variable to store our instance of the AprilTag processor.
@@ -98,6 +83,9 @@ public class Auto_BlueClose extends LinearOpMode {
     //The variable to store our instance of the TensorFlow Object Detection processor.
     private TfodProcessor tfod;
     private int propNumber;
+    VisionController visionController2;
+    FtcDashboard ftcDashboard;
+
 
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "model_20240117_115245.tflite";
@@ -106,6 +94,8 @@ public class Auto_BlueClose extends LinearOpMode {
     private static final String[] LABELS = {
             "blue_prop",
     };
+
+
 
 
     @Override
@@ -117,42 +107,60 @@ public class Auto_BlueClose extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "back_right");
         door = hardwareMap.get(Servo.class, "door");
         arm = hardwareMap.get(Servo.class, "arm");
+        linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
+        linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
+        linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
+        front_right.setDirection(DcMotor.Direction.REVERSE);
+        front_left.setDirection(DcMotorSimple.Direction.REVERSE);
+        back_left.setDirection(DcMotorSimple.Direction.REVERSE);
         double firstHalf = 300;
-
+        int startingPos = 1;
         double prop_x = 0;
         double id_x = 0;
         double maxExtention = 2400;
         int target_pos = 0;
         double far_blue = 200;
-        //initAprilTag();
+        //init_Auto();
 
+        AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
+                .setDrawAxes(true)
+                .setDrawCubeProjection(true)
+                .setDrawTagOutline(true)
+                .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
+                .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
+                .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+                .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
+                .build();
+
+        PropThreshold propThreshold = new PropThreshold();
+        VisionPortal visionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .setCameraResolution(new Size(640, 480))
+                .addProcessors(tagProcessor,propThreshold)
+                .build();
+
+
+        telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
+        propThreshold.setDetectionColor(AutoFunctions.detectRed(startingPos));
         // Wait for the DS start button to be touched.
-        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
-        telemetry.addData(">", "Touch Play to start OpMode");
-        telemetry.update();
-        previousState = AutonomousStates.INIT;
-        currentState = AutonomousStates.START;
+//        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
+//        telemetry.addData(">", "Touch Play to start OpMode");
+//        telemetry.update();
+//        previousState = AutonomousStates.INIT;
+//        currentState = AutonomousStates.START;
+//        visionController2 =new VisionController(hardwareMap, false, true, true, telemetry, ftcDashboard);
+
+
 
         waitForStart();
         if (opModeIsActive()) {
+//            ftcDashboard = FtcDashboard.getInstance();
+//            telemetry = new MultipleTelemetry(telemetry, ftcDashboard.getTelemetry());
+//            propLocation = visionController2.getLocationOnce();
+//            visionController2.updateTelemetry();
+//            telemetry.addData("Prop Detected", propLocation.getLocation());
+//            telemetry.update();
 
-            if(previousState == AutonomousStates.INIT) {
-                runtime.reset();
-                propLocation = visionController.getPropLocation();
-
-                switch (propLocation) {
-                    case LEFT:
-                        propNumber = 0;
-                        break;
-                    case MIDDLE:
-                        propNumber = 1;
-                        break;
-                    case RIGHT:
-                        propNumber = 2;
-                        break;
-                }
-                telemetry.update();
-            }
             // Push telemetry to the Driver Station.
 
             // Save CPU resources; can resume streaming when needed.
@@ -165,40 +173,111 @@ public class Auto_BlueClose extends LinearOpMode {
             // Share the CPU.
             sleep(20);
 
-            Movement.linearSlides(100, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-
-
-            if (propNumber== 1) {
-                leftProp();
-            }
-
-
-            if (propNumber == 2) {
-                centerProp();
-            }
-            if (propNumber == 3) {
-                rightProp();
-
-            } else {
-                rightProp();
-                //leftIDposition
-                Movement.right(240, telemetry, back_left, back_right, front_left, front_right);
-
-                //     rightProp();
-                //     Movement.left(108,telemetry, back_left, back_right, front_left, front_right);
-                //     id_x = rightID_x();
-                //     Movement.rotationRight(180, telemetry, back_left, back_right, front_left, front_right);
-
-            }
+            Movement.linearSlides(1000, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+            int objPos = AutoFunctions.detectTeamElement(tagProcessor, propThreshold, visionPortal);
+            telemetry.addData("Obj Pos", objPos);
+            telemetry.update();
+            leftProp();
+//            if (objPos== 1) {
+//                leftProp();
+//            }
+//
+//
+//            if (objPos == 2) {
+//                centerProp();
+//            }
+//            if (objPos == 3) {
+//                rightProp();
+//
+//           }
+//            else {
+//                rightProp();
+//                //leftIDposition
+//                Movement.right(240, telemetry, back_left, back_right, front_left, front_right);
+//
+//                //     rightProp();
+//                //     Movement.left(108,telemetry, back_left, back_right, front_left, front_right);
+//                //     id_x = rightID_x();
+//                //     Movement.rotationRight(180, telemetry, back_left, back_right, front_left, front_right);
+//
+//            }
 
 
         }
 
         // Save more CPU resources when camera is no longer needed.
-        visionPortal.close();
+        //visionPortal.close();
 
         // end method runOpMode()
     }
+
+
+
+
+
+
+
+
+
+
+
+//    private void init_Auto() {
+//
+//        // Create the TensorFlow processor by using a builder.
+//        tfod = new TfodProcessor.Builder()
+//
+//                // With the following lines commented out, the default TfodProcessor Builder
+//                // will load the default model for the season. To define a custom model to load,
+//                // choose one of the following:
+//                //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+//                //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+//                //.setModelAssetName(TFOD_MODEL_ASSET)
+//                .setModelFileName(TFOD_MODEL_FILE)
+//
+//                .setModelLabels(LABELS)
+//                .build();
+//        aprilTag = new AprilTagProcessor.Builder()
+//                .build();
+        // Create the vision portal by using a builder.
+//        VisionPortal.Builder builder = new VisionPortal.Builder();
+
+        // Set the camera (webcam vs. built-in RC phone camera).
+//        if (USE_WEBCAM) {
+//            builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+//        } else {
+//            builder.setCamera(BuiltinCameraDirection.BACK);
+//        }
+
+        // Choose a camera resolution. Not all cameras support all resolutions.
+        //builder.setCameraResolution(new Size(640, 480));
+
+        // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
+//        builder.enableLiveView(true);
+//        //builder.enableCameraMonitoring(true);
+//        builder.addProcessor(aprilTag);
+//
+//        builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+//
+//        builder.setAutoStopLiveView(false);
+//
+//
+//
+//        // Set and enable the processor.
+//        builder.addProcessor(tfod);
+//
+//        // Build the Vision Portal, using the above settings.
+//        visionPortal = builder.build();
+//
+//        // Set confidence threshold for TFOD recognitions, at any time.
+//        tfod.setMinResultConfidence(0.75f);
+//
+//        // Disable or re-enable the TFOD processor at any time.
+//        //VisionPortal.setProcessorEnabled(tfod, true);
+//
+//
+//    }   // end method initTfod()
+
+
 
 
     /**
@@ -349,11 +428,11 @@ public class Auto_BlueClose extends LinearOpMode {
 
 
     public void shiftShort() {
-        Movement.right(61, telemetry, back_left, back_right, front_left, front_right);
+        arm.setPosition(-1);
+        Movement.right(118, telemetry, back_left, back_right, front_left, front_right);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
         Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
         Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        arm.setPosition(-1);
         door.setPosition(-1);
 
          /*
