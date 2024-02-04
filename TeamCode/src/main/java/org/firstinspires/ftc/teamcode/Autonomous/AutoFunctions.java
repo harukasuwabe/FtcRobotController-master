@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static java.lang.Thread.sleep;
+
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -72,12 +74,10 @@ public class AutoFunctions {
                     break;
             }
         }
-//        if (leftCount > middleCount && leftCount > rightCount) return 1;
-//        else if (middleCount > leftCount && middleCount > rightCount) return 2;
-//        else return 3;
         if (leftCount > middleCount && leftCount > rightCount) return 1;
-        if (middleCount > leftCount && middleCount > rightCount) return 2;
-        else return 4;
+        else if (middleCount > leftCount && middleCount > rightCount) return 2;
+        else return 3;
+
     }
 
     public static int getTag(AprilTagProcessor tagProcessor,int startingPos) {
@@ -117,45 +117,75 @@ public class AutoFunctions {
     }
 
 
-    public void blueshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) {
-        Movement.right(61, telemetry, back_left, back_right, front_left, front_right);
+    public void blueshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+        Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+        arm.setPosition(-1);
+        sleep(100);
+        Movement.right(114, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
-        Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        arm.setPosition(-1);
-        door.setPosition(-1);
-
+        sleep(100);
+        Movement.right(10, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
 
     }
-    public void bluehiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door){
+    public void bluehiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
         // in this code you should assume that the prop is on the left.
-        Movement.right( 180 , telemetry, back_left, back_right, front_left, front_right);
+        Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+        arm.setPosition(-1);
+        sleep(100);
+        Movement.right(240, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
-        Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
-
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        arm.setPosition(-1);
-        door.setPosition(-1);
+        sleep(100);
+        Movement.right(10, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
     }
-    public void redshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) {
-        Movement.left(61, telemetry, back_left, back_right, front_left, front_right);
+    public static void redshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+
+        Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+        arm.setPosition(-1);
+        sleep(100);
+        Movement.left(114, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
-        Movement.left(20, telemetry, back_left, back_right, front_left, front_right);
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        arm.setPosition(-1);
-        door.setPosition(-1);
+        sleep(100);
+        Movement.left(10, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
 
 
     }
-    public void redshiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door){
+    public static void redshiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
         // in this code you should assume that the prop is on the left.
-        Movement.left( 180 , telemetry, back_left, back_right, front_left, front_right);
-        Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
-        Movement.left(20, telemetry, back_left, back_right, front_left, front_right);
-
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+        Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
-        door.setPosition(-1);
+        sleep(100);
+        Movement.left(240, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.left(10, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
     }
 }
 

@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.test;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import android.util.Size;
 
@@ -44,7 +44,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
-import org.firstinspires.ftc.teamcode.Autonomous.AutoFunctions;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -63,8 +62,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="redCamTest", group="Test")
-public class redCamTest extends LinearOpMode {
+@Autonomous(name="Auto_Red_Close", group="Test")
+public class Red_Close extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     int startingPos = 3; // Each corresponds to the quadrant one is starting at
@@ -100,7 +99,7 @@ public class redCamTest extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -165,18 +164,23 @@ public class redCamTest extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-//            if (objPos== 1) {
-//                leftProp();
-//            }
-//
-//
-//            if (objPos == 2) {
-//                centerProp();
-//            }
-//            if (objPos == 3) {
-//                rightProp();
-//
-//           }
+            if (objPos== 1) {
+                rightside.centerProp(back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+            }
+
+
+            if (objPos == 2) {
+                rightside.rightProp(back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+
+            }
+            if (objPos == 3) {
+                rightside.leftProp(back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+
+
+            }
         }
     }
 }
