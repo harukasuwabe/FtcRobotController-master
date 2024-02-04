@@ -142,6 +142,7 @@ public class Auto_BlueClose extends LinearOpMode {
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
         propThreshold.setDetectionColor(AutoFunctions.detectRed(startingPos));
+
         // Wait for the DS start button to be touched.
 //        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
 //        telemetry.addData(">", "Touch Play to start OpMode");
@@ -173,11 +174,11 @@ public class Auto_BlueClose extends LinearOpMode {
             // Share the CPU.
             sleep(20);
 
-            Movement.linearSlides(1000, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+            Movement.linearSlides(100, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
             int objPos = AutoFunctions.detectTeamElement(tagProcessor, propThreshold, visionPortal);
             telemetry.addData("Obj Pos", objPos);
             telemetry.update();
-            leftProp();
+//
 //            if (objPos== 1) {
 //                leftProp();
 //            }
@@ -394,13 +395,20 @@ public class Auto_BlueClose extends LinearOpMode {
     public void leftProp() {
 // in this code you should assume that the prop is on the left.
         Movement.backward(70, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         //Movement.backward(5,telemetry, back_left, back_right, front_left, front_right);
         Movement.forward(15, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.right(5, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.forward(65, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.right(5, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         shiftShort();
 
 
@@ -409,18 +417,26 @@ public class Auto_BlueClose extends LinearOpMode {
     public void centerProp() {
         //places pixel to the center and oes to the april tag position
         Movement.backward(65, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.forward(55, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         shiftShort();
     }
 
     public void rightProp() {
         //places pixel to the right and goes to the april tag position
         Movement.backward(70, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.backward(15, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.forward(15, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.forward(60, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         shiftShort();
     }//scan code thingy
 
@@ -428,12 +444,24 @@ public class Auto_BlueClose extends LinearOpMode {
 
 
     public void shiftShort() {
+        Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
-        Movement.right(118, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.right(114, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
         Movement.rotationRight(90, telemetry, back_left, back_right, front_left, front_right);
-        Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
-        Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
-        door.setPosition(-1);
+        sleep(100);
+        Movement.right(10, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        sleep(100);
+        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1);
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+
+        //Movement.right(20, telemetry, back_left, back_right, front_left, front_right);
+        //Movement.linearSlides(1240, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+        //door.setPosition(-1);
 
          /*
         linearSlideMotor_Right.setPower(1);

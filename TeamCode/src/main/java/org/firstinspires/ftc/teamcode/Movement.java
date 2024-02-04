@@ -163,7 +163,7 @@ public class Movement {
     //rotation right
     public static void rotationRight(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-        rotations = degrees * 14;
+        rotations = degrees * 13;
         // SET TARGET POSITION
         motorFrontRight.setTargetPosition((int) -rotations);
         motorFrontLeft.setTargetPosition((int) rotations);
@@ -188,7 +188,7 @@ public class Movement {
 
     public static void rotationLeft(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-        rotations = degrees * 14;
+        rotations = degrees * 13;
         // SET TARGET POSITION
         motorFrontRight.setTargetPosition((int) rotations);
         motorFrontLeft.setTargetPosition((int) -rotations);

@@ -72,9 +72,12 @@ public class AutoFunctions {
                     break;
             }
         }
+//        if (leftCount > middleCount && leftCount > rightCount) return 1;
+//        else if (middleCount > leftCount && middleCount > rightCount) return 2;
+//        else return 3;
         if (leftCount > middleCount && leftCount > rightCount) return 1;
-        else if (middleCount > leftCount && middleCount > rightCount) return 2;
-        else return 3;
+        if (middleCount > leftCount && middleCount > rightCount) return 2;
+        else return 4;
     }
 
     public static int getTag(AprilTagProcessor tagProcessor,int startingPos) {
