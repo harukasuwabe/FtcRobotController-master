@@ -31,13 +31,13 @@ public class PropThreshold implements VisionProcessor {
     public void init(int width, int height, CameraCalibration calibration) {
 
         this.LEFT_RECTANGLE = new Rect(
-                new Point(0, 0),
-                new Point(width / 3, height)
+                new Point(0,0),
+                new Point(width/2, height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(width / 3, 0),
-                new Point(3 * width / 4, height)
+                new Point(width /2, 0),
+                new Point(width, height)
         );
     }
 

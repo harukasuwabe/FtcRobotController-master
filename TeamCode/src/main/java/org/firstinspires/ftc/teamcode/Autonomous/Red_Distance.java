@@ -43,6 +43,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -165,19 +167,19 @@ public class Red_Distance extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (objPos== 2) {
-                leftside.centerProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                leftside.centerProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
             if (objPos == 3) {
-                leftside.rightProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                leftside.rightProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
             if (objPos == 1) {
-                leftside.leftProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                leftside.leftProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
 
             }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static java.lang.Thread.sleep;
@@ -117,7 +117,7 @@ public class AutoFunctions {
     }
 
 
-    public void blueshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+    public static void blueshiftShort(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
         Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
         sleep(100);
@@ -134,7 +134,7 @@ public class AutoFunctions {
         Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
 
     }
-    public void bluehiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+    public static void blueshiftLong(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
         // in this code you should assume that the prop is on the left.
         Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
@@ -151,7 +151,7 @@ public class AutoFunctions {
         door.setPosition(1);
         Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
     }
-    public static void redshiftShort(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+    public static void redshiftShort(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
 
         Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
@@ -170,7 +170,7 @@ public class AutoFunctions {
 
 
     }
-    public static void redshiftLong(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
+    public static void redshiftLong(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door) throws InterruptedException {
         // in this code you should assume that the prop is on the left.
         Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);

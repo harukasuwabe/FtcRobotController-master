@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.test;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import android.util.Size;
 
@@ -43,11 +43,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
+import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
 
 
 /*
@@ -63,11 +65,11 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="redCamTest", group="Test")
-public class redCamTest extends LinearOpMode {
+@Autonomous(name="Blue_Distance", group="Test")
+public class Blue_Distance extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    int startingPos = 3; // Each corresponds to the quadrant one is starting at
+    int startingPos = 1; // Each corresponds to the quadrant one is starting at
     /*
      * 1 = Blue closer to stage
      * 2 = Blue closer to parking
@@ -100,7 +102,7 @@ public class redCamTest extends LinearOpMode {
 
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -135,6 +137,7 @@ public class redCamTest extends LinearOpMode {
         telemetry.addData("Status", "updated");
         telemetry.update();
 
+
         AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
                 .setDrawCubeProjection(true)
@@ -147,7 +150,7 @@ public class redCamTest extends LinearOpMode {
 
         PropThreshold propThreshold = new PropThreshold();
         VisionPortal visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .setCamera(hardwareMap.get(WebcamName.class, "webcam"))
                 .setCameraResolution(new Size(640, 480))
                 .addProcessors(tagProcessor,propThreshold)
                 .build();
@@ -163,20 +166,29 @@ public class redCamTest extends LinearOpMode {
         telemetry.addData("left perc, middle perc:", propThreshold.getPercents());
         telemetry.update();
 
+
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-//            if (objPos== 1) {
-//                leftProp();
-//            }
-//
-//
-//            if (objPos == 2) {
-//                centerProp();
-//            }
-//            if (objPos == 3) {
-//                rightProp();
-//
-//           }
+            if (objPos== 1) {
+                rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
+                rightside.centerProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.blueshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+            }
+
+
+            if (objPos == 2) {
+                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+
+            }
+            if (objPos == 3) {
+                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+
+
+            }
+
         }
     }
 }

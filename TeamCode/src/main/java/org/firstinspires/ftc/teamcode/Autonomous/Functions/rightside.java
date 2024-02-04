@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
@@ -20,7 +20,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import android.util.Size;
 import java.util.ArrayList;
 public class rightside {
-    public static void leftProp(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
+    public static void leftProp(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
 // in this code you should assume that the prop is on the left.
         Movement.backward(70,telemetry, back_left, back_right, front_left, front_right);
         Thread.sleep(100);
@@ -36,14 +36,14 @@ public class rightside {
 
 
     }
-    public static void centerProp(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
+    public static void centerProp(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
         //places pixel to the center and oes to the april tag position
         Movement.backward(75,telemetry, back_left, back_right, front_left, front_right);
         Thread.sleep(100);
         Movement.forward(63,telemetry, back_left, back_right, front_left, front_right);
 
     }
-    public static void rightProp(DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
+    public static void rightProp(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
         //places pixel to the right and goes to the april tag position
         Movement.backward(70,telemetry, back_left, back_right, front_left, front_right);
         Thread.sleep(100);

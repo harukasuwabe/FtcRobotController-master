@@ -35,7 +35,6 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -43,6 +42,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -124,10 +125,7 @@ public class Red_Close extends LinearOpMode {
 
 
         // Zero Power Behavior
-        front_left.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        front_right.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        back_left.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        back_right.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
 
 
 
@@ -164,20 +162,23 @@ public class Red_Close extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
+
             if (objPos== 1) {
-                rightside.centerProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
+                rightside.centerProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
             if (objPos == 2) {
-                rightside.rightProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
             if (objPos == 3) {
-                rightside.leftProp(back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
+                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
 
             }
