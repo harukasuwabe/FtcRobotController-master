@@ -45,18 +45,20 @@ public class RightPropProcessor implements VisionProcessor, CameraStreamSource {
     public void init(int width, int height, CameraCalibration calibration) {
 
         this.RIGHT_RECTANGLE = new Rect(
-                new Point(5 * width / 8,height / 3.5),
-                new Point(width, 2 * height / 3)
+                new Point(5 * width / 8,0),
+                new Point(width, height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(width / 10, height / 3.5),
-                new Point(7 * width / 16, 2 * height / 3)
+                new Point(width / 10, 0),
+                new Point(7 * width / 16, height)
         );
 
         lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565));
     }
-
+    public String getPropPosition(){  //Returns postion of the prop in a String
+        return CustomTypes.propLocation;
+    }
     public void setDetectionColor(boolean detectRed) {
         this.detectingRed = detectRed;
     }

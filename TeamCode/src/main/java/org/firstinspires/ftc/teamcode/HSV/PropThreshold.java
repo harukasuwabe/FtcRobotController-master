@@ -17,7 +17,7 @@ public class PropThreshold implements VisionProcessor {
     private Mat highMat = new Mat();
     private Mat lowMat = new Mat();
     private Mat finalMat = new Mat();
-    private static double threshold = 0.10;
+    private static double threshold = 0.001;
 
     String outStr = "none"; //Set a default value in case vision does not work
     double leftPerc;
@@ -32,12 +32,12 @@ public class PropThreshold implements VisionProcessor {
 
         this.LEFT_RECTANGLE = new Rect(
                 new Point(0,0),
-                new Point(width/2, height)
+                new Point(width/3, height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(width /2, 0),
-                new Point(width, height)
+                new Point(width / 3, height),
+                new Point(3 * width / 4, height)
         );
     }
 

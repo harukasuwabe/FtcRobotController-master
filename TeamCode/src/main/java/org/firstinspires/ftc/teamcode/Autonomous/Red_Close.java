@@ -45,6 +45,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
+import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -142,22 +143,24 @@ public class Red_Close extends LinearOpMode {
                 .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
                 .build();
 
-        PropThreshold propThreshold = new PropThreshold();
+
+        RightPropProcessor rightPropProcessor = new RightPropProcessor();
+        rightPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
-                .addProcessors(tagProcessor,propThreshold)
+                .addProcessors(tagProcessor,rightPropProcessor)
                 .build();
 
+        visionPortal.setProcessorEnabled(rightPropProcessor, true);
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
-        propThreshold.setDetectionColor(AutoFunctions.detectRed(startingPos));
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.detectTeamElement(tagProcessor,propThreshold,visionPortal);
+        objPos = AutoFunctions.detectTeamElementright(tagProcessor,rightPropProcessor,visionPortal);
         telemetry.addData("Obj Pos", objPos);
-        telemetry.addData("left perc, middle perc:", propThreshold.getPercents());
+        telemetry.addData("left perc, middle perc:", rightPropProcessor.getPercents());
         telemetry.update();
 
         // run until the end of the match (driver presses STOP)
@@ -166,19 +169,18 @@ public class Red_Close extends LinearOpMode {
 
             if (objPos== 1) {
                 rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
-                rightside.centerProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
             if (objPos == 2) {
-                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
             if (objPos == 3) {
-                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
 
             }

@@ -45,13 +45,13 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
     public void init(int width, int height, CameraCalibration calibration) {
 
         this.LEFT_RECTANGLE = new Rect(
-                new Point(width / 3, height / 3.5),
-                new Point(3 * width / 8, 2 * height / 3)
+                new Point(width / 3, height),
+                new Point(3 * width / 8, height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(9 * width / 16, height / 3.5),
-                new Point(9 * width / 10, 2 * height / 3)
+                new Point(9 * width / 16, height),
+                new Point(9 * width / 10, height)
         );
 
         lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565));
@@ -151,6 +151,9 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
         this.telemetry = telemetry;
     }
 
+    public String getPropPosition(){  //Returns postion of the prop in a String
+        return CustomTypes.propLocation;
+    }
     public void updateTelemetry() {
         telemetry.addLine("Prop Processor")
                 .addData("Left Percent", leftPerc)
@@ -162,4 +165,5 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
     public void getFrameBitmap(Continuation<? extends Consumer<Bitmap>> continuation) {
         continuation.dispatch(bitmapConsumer -> bitmapConsumer.accept(lastFrame.get()));
     }
+
 }

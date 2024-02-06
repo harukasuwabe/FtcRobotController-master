@@ -45,6 +45,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
+import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -146,22 +147,23 @@ public class Red_Distance extends LinearOpMode {
                 .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
                 .build();
 
-        PropThreshold propThreshold = new PropThreshold();
+        LeftPropProcessor leftPropProcessor = new LeftPropProcessor();
+        leftPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
-                .addProcessors(tagProcessor,propThreshold)
+                .addProcessors(tagProcessor,leftPropProcessor)
                 .build();
 
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
-        propThreshold.setDetectionColor(AutoFunctions.detectRed(startingPos));
+        visionPortal.setProcessorEnabled(leftPropProcessor, true);
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.detectTeamElement(tagProcessor,propThreshold,visionPortal);
+        objPos = AutoFunctions.detectTeamElementleft(tagProcessor,leftPropProcessor,visionPortal);
         telemetry.addData("Obj Pos", objPos);
-        telemetry.addData("left perc, middle perc:", propThreshold.getPercents());
+        telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
         telemetry.update();
 
         // run until the end of the match (driver presses STOP)

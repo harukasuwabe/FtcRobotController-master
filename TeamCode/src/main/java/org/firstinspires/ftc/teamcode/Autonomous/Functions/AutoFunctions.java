@@ -1,25 +1,20 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Functions;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static java.lang.Thread.sleep;
 
+import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-import android.util.Size;
 import java.util.ArrayList;
 
 
@@ -38,11 +33,10 @@ public class AutoFunctions {
         if (startingPos == 1 || startingPos == 2) return false;
         return true;
     }
-
-    public static int detectTeamElement(AprilTagProcessor tagProcessor, PropThreshold propThreshold, VisionPortal visionPortal){
+    public static int detectTeamElementleft(AprilTagProcessor tagProcessor, LeftPropProcessor leftPropProcessor, VisionPortal visionPortal){
         int objPos = 0;
         visionPortal.setProcessorEnabled(tagProcessor, false);
-        visionPortal.setProcessorEnabled(propThreshold, true);
+        visionPortal.setProcessorEnabled(leftPropProcessor, true);
 
         //Detects team elements location
         try {
@@ -50,35 +44,122 @@ public class AutoFunctions {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        objPos = getPropLocation(propThreshold);
-        visionPortal.setProcessorEnabled(propThreshold, false);
+        objPos = getPropLocationleft(leftPropProcessor);
+        visionPortal.setProcessorEnabled(leftPropProcessor, false);
         //visionPortal.setProcessorEnabled(tagProcessor, true);
         return objPos;
     }
 
-    public static int getPropLocation(PropThreshold propThreshold) {
+    public static int detectTeamElementright(AprilTagProcessor tagProcessor, RightPropProcessor rightPropProcessor, VisionPortal visionPortal){
+        int objPos = 0;
+        visionPortal.setProcessorEnabled(tagProcessor, false);
+        visionPortal.setProcessorEnabled(rightPropProcessor, true);
 
-        int leftCount = 0;
-        int middleCount = 0;
-        int rightCount = 0;
-        for (int i = 0; i < 50; i++) {
-            switch (propThreshold.getPropPosition()) {
-                case "left":
-                    leftCount++;
-                    break;
-                case "middle":
-                    middleCount++;
-                    break;
-                case "none":
-                    rightCount++;
-                    break;
-            }
+        //Detects team elements location
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        if (leftCount > middleCount && leftCount > rightCount) return 1;
-        else if (middleCount > leftCount && middleCount > rightCount) return 2;
-        else return 3;
+        objPos = getPropLocationright(rightPropProcessor);
+        visionPortal.setProcessorEnabled(rightPropProcessor, false);
+        //visionPortal.setProcessorEnabled(tagProcessor, true);
+        return objPos;
+    }
+public static int getPropLocationleft(LeftPropProcessor leftPropProcessor) {
+
+    CustomTypes.PropLocation propLocation = leftPropProcessor.getPropLocation();
+    if (propLocation == CustomTypes.PropLocation.LEFT) {
+        return 1;
+    } else if (propLocation == CustomTypes.PropLocation.MIDDLE) {
+        return 2;
+    } else {
+        return 3;
+    }
+
+//    int leftCount = 0;
+//    int middleCount = 0;
+//    int rightCount = 0;
+//    for (int i = 0; i < 50; i++) {
+//        CustomTypes.PropLocation propLocation = leftPropProcessor.getPropLocation();
+//        if (propLocation != null) {
+//            switch (propLocation.location) {
+//                case "left":
+//                    leftCount++;
+//                    break;
+//                case "middle":
+//                    middleCount++;
+//                    break;
+//                case "none":
+//                    rightCount++;
+//                    break;
+//            }
+//        }
+//    }
+//    if (leftCount > middleCount && leftCount > rightCount) return 1;
+//    else if (middleCount > leftCount && middleCount > rightCount) return 2;
+//    else return 3;
+
+}
+    public static int getPropLocationright(RightPropProcessor rightPropProcessor) {
+
+        CustomTypes.PropLocation propLocation = rightPropProcessor.getPropLocation();
+        if (propLocation == CustomTypes.PropLocation.LEFT) {
+            return 1;
+        } else if (propLocation == CustomTypes.PropLocation.MIDDLE) {
+            return 2;
+        } else {
+            return 3;
+        }
+
+//        int leftCount = 0;
+//        int middleCount = 0;
+//        int rightCount = 0;
+//        for (int i = 0; i < 50; i++) {
+//            CustomTypes.PropLocation propLocation = rightPropProcessor.getPropLocation();
+//            if (propLocation != null) {
+//                switch (rightPropProcessor.getPropPosition()) {
+//                    case "left":
+//                        leftCount++;
+//                        break;
+//                    case "middle":
+//                        middleCount++;
+//                        break;
+//                    case "none":
+//                        rightCount++;
+//                        break;
+//                }
+//            }
+//        }
+//        if (leftCount > middleCount && leftCount > rightCount) return 1;
+//        else if (middleCount > leftCount && middleCount > rightCount) return 2;
+//        else return 3;
 
     }
+
+//    public static int getPropLocation(PropThreshold propThreshold) {
+//
+//        int leftCount = 0;
+//        int middleCount = 0;
+//        int rightCount = 0;
+//        for (int i = 0; i < 50; i++) {
+//            switch (propThreshold.getPropPosition()) {
+//                case "left":
+//                    leftCount++;
+//                    break;
+//                case "middle":
+//                    middleCount++;
+//                    break;
+//                case "none":
+//                    rightCount++;
+//                    break;
+//            }
+//        }
+//        if (leftCount > middleCount && leftCount > rightCount) return 1;
+//        else if (middleCount > leftCount && middleCount > rightCount) return 2;
+//        else return 3;
+//
+//    }
 
     public static int getTag(AprilTagProcessor tagProcessor,int startingPos) {
         int leftCount = 0;
@@ -129,7 +210,7 @@ public class AutoFunctions {
         sleep(100);
         Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
         sleep(100);
-        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
+        Movement.forward(3, telemetry, back_left, back_right, front_left, front_right);
         door.setPosition(1);
         Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
 
@@ -156,17 +237,16 @@ public class AutoFunctions {
         Movement.linearSlides(900, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
         arm.setPosition(-1);
         sleep(100);
-        Movement.left(114, telemetry, back_left, back_right, front_left, front_right);
+        Movement.left(96, telemetry, back_left, back_right, front_left, front_right); // reduced this distance from 114 to 96
         sleep(100);
         Movement.rotationLeft(90, telemetry, back_left, back_right, front_left, front_right);
         sleep(100);
         Movement.left(10, telemetry, back_left, back_right, front_left, front_right);
         sleep(100);
-        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        Movement.forward(5, telemetry, back_left, back_right, front_left, front_right);
         sleep(100);
-        Movement.forward(10, telemetry, back_left, back_right, front_left, front_right);
-        door.setPosition(1);
-        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right);
+        door.setPosition(1); // releases pixel onto backboard
+        Movement.forward(2, telemetry, back_left, back_right, front_left, front_right); // why do we have this?
 
 
     }

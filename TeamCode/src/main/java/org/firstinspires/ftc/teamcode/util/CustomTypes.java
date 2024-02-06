@@ -7,6 +7,7 @@ public class CustomTypes {
     public static final double ROBOT_WIDTH = 14.0;
     public static final double ROBOT_LENGTH = 12.0;
     public static final double ALLOWABLE_HEADING_ERROR = 3.0;
+    public static String propLocation;
 
     public enum PropLocation {
         LEFT("left"),
