@@ -21,6 +21,8 @@ public class NewTeleop extends LinearOpMode {
     private Servo intake;
     private Servo door;
     private Servo airplane;
+    private Servo arm;
+
 
 
     private final int SLIDE_UP_POSITION = 1000;  // Adjust this value
@@ -32,11 +34,12 @@ public class NewTeleop extends LinearOpMode {
         front_right = hardwareMap.dcMotor.get("front_right");
         front_left = hardwareMap.dcMotor.get("front_left");
         back_right = hardwareMap.dcMotor.get("back_right");
-        linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_Right");
-        linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_Left");
+        linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
+        linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
         intake = hardwareMap.servo.get("intake");
         door = hardwareMap.servo.get("door");
         airplane = hardwareMap.servo.get("airplane");
+        arm = hardwareMap.servo.get("arm");
         //claw = hardwareMap.get(Servo.class, "claw");
         //door = hardwareMap.get(Servo.class, "door");
 
@@ -81,56 +84,73 @@ public class NewTeleop extends LinearOpMode {
             rightfrontpower = (sin * power - rx);
             leftrearpower = (sin * power + rx);
             rightrearpower = (cos * power + rx);
-            front_left.setPower(leftfrontpower);
-            back_left.setPower(-leftrearpower);
-            front_right.setPower(-rightfrontpower);
-            back_right.setPower(-rightrearpower);
+            front_left.setPower(Math.cbrt(leftfrontpower));
+            back_left.setPower(Math.cbrt(-leftrearpower));
+            front_right.setPower(Math.cbrt(-rightfrontpower));
+            back_right.setPower(Math.cbrt(-rightrearpower));
 
 
             //new linnear slide code
-            if (linearSlideMotor_Right.getCurrentPosition() > 0 && linearSlideMotor_Left.getCurrentPosition() > 0 && linearSlideMotor_Right.getCurrentPosition() < maxExtention && linearSlideMotor_Left.getCurrentPosition() < maxExtention) {
-
-                telemetry.update();
-                linearSlideMotor_Right.setPower(linear_motion);
-                linearSlideMotor_Left.setPower(linear_motion);
-            }
+            if (linearSlideMotor_Right.getCurrentPosition()<maxExtention && linearSlideMotor_Left.getCurrentPosition()<maxExtention){
+                if (gamepad1.y){
+                    telemetry.update();
+                    linearSlideMotor_Right.setPower(1);
+                    linearSlideMotor_Left.setPower(1);
+                }
                 else {
                     linearSlideMotor_Right.setPower(0.06);
                     linearSlideMotor_Left.setPower(0.06);
                 }
-
-
-            if (gamepad1.b){
-                telemetry.addLine("Button pressed!");
-                telemetry.update();
-
-
-                linearSlideMotor_Right.setTargetPosition(50);
-                linearSlideMotor_Left.setTargetPosition(50);
-                linearSlideMotor_Right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                linearSlideMotor_Left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                linearSlideMotor_Right.setPower(1); // Adjust power as needed
-                linearSlideMotor_Left.setPower(1); // Adjust power as needed
+            }
+            else {
+                linearSlideMotor_Right.setPower(0);
+                linearSlideMotor_Left.setPower(0);
             }
 
-            if (gamepad2.dpad_up){
+            if (linearSlideMotor_Right.getCurrentPosition()>0 && linearSlideMotor_Left.getCurrentPosition()>0){
+                if (gamepad1.a){
+                    telemetry.update();
+                    linearSlideMotor_Right.setPower(-0.5);
+                    linearSlideMotor_Left.setPower(-0.5);
+                }
+                else {
+                    linearSlideMotor_Right.setPower(0);
+                    linearSlideMotor_Left.setPower(0);
+                }
+            }
+            else {
+                linearSlideMotor_Right.setPower(0);
+                linearSlideMotor_Left.setPower(0);
+            }
+            if (gamepad2.dpad_right){
                 door.setPosition(1);
             }
-            if (gamepad2.dpad_down){
+            if (gamepad2.dpad_left){
                 door.setPosition(-1);
             }
-//            if (gamepad1.dpad_right){
-//                intake.setPosition(1);
-//            }
-//            if (gamepad1.dpad_left){
-//                intake.setPosition(-1);
-            //}
             if (gamepad1.left_bumper){
                 airplane.setPosition(-1);
             }
             if (gamepad1.right_bumper){
                 airplane.setPosition(1);
             }
+
+            if (gamepad2.dpad_up){
+                arm.setPosition(-1);
+            }
+
+            if (gamepad2.dpad_down){
+                arm.setPosition(0.5);
+            }
+
+            if (gamepad2.x){
+                intake.setPosition(1);
+            }
+
+            if (gamepad2.b){
+                intake.setPosition(.5);
+            }
+
 
 //            if (gamepad2.x) {
 //                intake_wheel.setPower(1);
