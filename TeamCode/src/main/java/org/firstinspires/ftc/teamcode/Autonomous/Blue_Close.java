@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -103,12 +104,17 @@ public class Blue_Close extends LinearOpMode {
 
     BNO055IMU imu = null;
 
+    @Override
+    public void updateTelemetry(Telemetry telemetry) {
+        super.updateTelemetry(telemetry);
+    }
 
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        sleep(1000);
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
         params.angleUnit = BNO055IMU.AngleUnit.DEGREES; // sets angle degrees
         imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -167,7 +173,7 @@ public class Blue_Close extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.detectTeamElementleft(tagProcessor, leftPropProcessor,visionPortal);
+        objPos = AutoFunctions.getPropLocationleft(leftPropProcessor);
         telemetry.addData("Obj Pos", objPos);
         telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
         telemetry.update();

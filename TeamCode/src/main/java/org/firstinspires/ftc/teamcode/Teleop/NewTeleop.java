@@ -9,6 +9,8 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 
+import org.firstinspires.ftc.teamcode.Movement;
+
 
 @TeleOp(name = "NewTeleop")
 public class NewTeleop extends LinearOpMode {
@@ -67,7 +69,7 @@ public class NewTeleop extends LinearOpMode {
             double leftrearpower = sin * power + rx;
             double rightrearpower = cos * power + rx;
             int maxExtention = 2200;
-
+            double linearPower = gamepad2.right_stick_y;
 
             if ((power + Math.abs(left_stick_x)) > 1) {
                 leftfrontpower /= power + left_stick_x;
@@ -88,6 +90,8 @@ public class NewTeleop extends LinearOpMode {
             back_left.setPower(Math.cbrt(-leftrearpower));
             front_right.setPower(Math.cbrt(-rightfrontpower));
             back_right.setPower(Math.cbrt(-rightrearpower));
+            linearSlideMotor_Left.setPower(linearPower);
+            linearSlideMotor_Right.setPower(linearPower);
 
 
             //new linnear slide code
@@ -150,6 +154,9 @@ public class NewTeleop extends LinearOpMode {
             if (gamepad2.b){
                 intake.setPosition(.5);
             }
+            if (gamepad2.left_bumper){
+                Movement.linearSlides(0, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+            }
 
 
 //            if (gamepad2.x) {
@@ -162,6 +169,8 @@ public class NewTeleop extends LinearOpMode {
             telemetry.addData("Back Right Pow", back_right.getPower());
             telemetry.addData("Linear Slide Right Position", linearSlideMotor_Right.getCurrentPosition());
             telemetry.addData("Linear Slide Left Position", linearSlideMotor_Left.getCurrentPosition());
+            telemetry.addData("Left Linear Slide Pow", linearSlideMotor_Left.getPower());
+            telemetry.addData("Right Linear Slide Pow", linearSlideMotor_Right.getPower());
             telemetry.update();
 
         }}

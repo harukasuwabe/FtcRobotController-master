@@ -29,8 +29,8 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
     private Mat highMat = new Mat();
     private Mat lowMat = new Mat();
     private Mat finalMat = new Mat();
-    private double middleThreshold = 0.2;
-    private double leftThreshold = 0.25;
+    private double middleThreshold = 0.05;
+    private double leftThreshold = 0.05;
     Telemetry telemetry;
 
     CustomTypes.PropLocation propLocation;
@@ -45,15 +45,14 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
     public void init(int width, int height, CameraCalibration calibration) {
 
         this.LEFT_RECTANGLE = new Rect(
-                new Point(width / 3, height),
-                new Point(3 * width / 8, height)
+                new Point(0, 0.5 * height),
+                new Point(0.222 * width, 0.9 * height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(9 * width / 16, height),
-                new Point(9 * width / 10, height)
+                new Point(0.3125 * width, 0.5 * height),
+                new Point(0.9 * width, 0.8 * height)
         );
-
         lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565));
     }
 
@@ -69,14 +68,14 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
             Scalar lowHSVRedLower = new Scalar(0, 100, 20);  //Beginning of Color Wheel
             Scalar lowHSVRedUpper = new Scalar(10, 255, 255);
 
-            Scalar redHSVRedLower = new Scalar(160, 100, 20); //Wraps around Color Wheel
-            Scalar highHSVRedUpper = new Scalar(180, 255, 255);
+            Scalar redHSVRedLower = new Scalar(169, 100, 20); //Wraps around Color Wheel
+            Scalar highHSVRedUpper = new Scalar(179, 255, 255);
 
             Core.inRange(testMat, lowHSVRedLower, lowHSVRedUpper, lowMat);
             Core.inRange(testMat, redHSVRedLower, highHSVRedUpper, highMat);
             Core.bitwise_or(lowMat, highMat, finalMat);
         } else {
-            Scalar blueHSVLower = new Scalar(85, 100, 20);
+            Scalar blueHSVLower = new Scalar(89, 100, 20);
             Scalar blueHSVUpper = new Scalar(140, 255, 255);
 
             Core.inRange(testMat, blueHSVLower, blueHSVUpper, finalMat);
@@ -91,7 +90,7 @@ public class LeftPropProcessor implements VisionProcessor, CameraStreamSource {
 
         this.leftPerc = leftBox / LEFT_RECTANGLE.area() / 255;
         this.middlePerc = middleBox / MIDDLE_RECTANGLE.area() / 255; //Makes value [0,1]
-        this.middlePerc *= 2;
+        //this.middlePerc *= 2;
 
         if(leftPerc > middlePerc
                 && leftPerc > leftThreshold) {
