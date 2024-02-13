@@ -29,6 +29,10 @@
 
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.LEFT;
+import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.MIDDLE;
+import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.RIGHT;
+
 import android.util.Size;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -168,7 +172,6 @@ public class Blue_Close extends LinearOpMode {
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
 
-
         visionPortal.setProcessorEnabled(leftPropProcessor, true);
 
         waitForStart();
@@ -183,18 +186,18 @@ public class Blue_Close extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            if (objPos== 1) {
+            if (leftPropProcessor.getPropLocation()==LEFT) {
                 leftside.leftProp(telemetry, back_left,back_right,front_left,front_right);
                 //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
-            if (objPos == 2) {
+            if (leftPropProcessor.getPropLocation()==MIDDLE) {
                 leftside.centerProp(telemetry, back_left, back_right, front_left, front_right);
                 //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
-            if (objPos == 3) {
+            if (leftPropProcessor.getPropLocation()==RIGHT) {
                 leftside.rightProp(telemetry, back_left, back_right, front_left, front_right);
                 //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 

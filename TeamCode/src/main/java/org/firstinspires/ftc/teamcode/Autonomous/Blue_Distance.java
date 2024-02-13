@@ -48,6 +48,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
 import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -175,19 +176,19 @@ public class Blue_Distance extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if (objPos== 1) {
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.MIDDLE) {
                 rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
                 //rightside.centerProp(telemetry, back_left, back_right, front_left, front_right);
                 //AutoFunctions.blueshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
-            if (objPos == 2) {
+            else if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT) {
                 rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
                 //AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
-            if (objPos == 3) {
+            else  {
                 rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
                 //AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
                 //Movement.right(70, telemetry, back_left, back_right, front_left, front_right);
