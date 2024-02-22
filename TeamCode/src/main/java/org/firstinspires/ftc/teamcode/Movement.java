@@ -20,6 +20,7 @@ public class Movement {
     // private static DcMotor ArmMotor;
     // private static Servo claw;
 
+
     static double rotations;
     static double ticks;
 
@@ -163,7 +164,7 @@ public class Movement {
     //rotation right
     public static void rotationRight(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-        rotations = degrees * 13;
+        rotations = degrees * 14;
         // SET TARGET POSITION
         motorFrontRight.setTargetPosition((int) -rotations);
         motorFrontLeft.setTargetPosition((int) rotations);
@@ -188,7 +189,7 @@ public class Movement {
 
     public static void rotationLeft(double degrees, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {
         reset_encoders(motorBackLeft, motorBackRight, motorFrontLeft, motorFrontRight);
-        rotations = degrees * 13;
+        rotations = degrees * 14;
         // SET TARGET POSITION
         motorFrontRight.setTargetPosition((int) rotations);
         motorFrontLeft.setTargetPosition((int) -rotations);
@@ -210,6 +211,7 @@ public class Movement {
             telemetry.update();
         }
     }
+
     public static void linearSlides(int ticks, Telemetry telemetry, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
         //SET TARGET POSITION
@@ -219,8 +221,8 @@ public class Movement {
         motorLinearSlideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorLinearSlideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //POWER
-        ((DcMotorEx) motorLinearSlideLeft).setVelocity(200);
-        ((DcMotorEx) motorLinearSlideRight).setVelocity(-200);
+        ((DcMotorEx) motorLinearSlideLeft).setPower(1);
+        ((DcMotorEx) motorLinearSlideRight).setPower(-1);
     }
 }
 

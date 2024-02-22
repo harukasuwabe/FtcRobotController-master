@@ -29,8 +29,8 @@ public class RightPropProcessor implements VisionProcessor, CameraStreamSource {
     private Mat highMat = new Mat();
     private Mat lowMat = new Mat();
     private Mat finalMat = new Mat();
-    private final double middleThreshold = 0.2;
-    private final double rightThreshold = 0.25;
+    private final double middleThreshold = 0.05;
+    private final double rightThreshold = 0.05;
     Telemetry telemetry;
 
     CustomTypes.PropLocation propLocation;
@@ -46,12 +46,12 @@ public class RightPropProcessor implements VisionProcessor, CameraStreamSource {
 
         this.RIGHT_RECTANGLE = new Rect(
                 new Point( width,0.5 * height),
-                new Point(0.778*width, 0.9 * height)
+                new Point(0.65*width, 0.9 * height)
         );
 
         this.MIDDLE_RECTANGLE = new Rect(
-                new Point(0.3125 * width, 0.5 * height),
-                new Point(0.9 * width, 0.8 * height)
+                new Point(0.2 * width, 0.5 * height),
+                new Point(0.5 * width, 0.8 * height)
         );
 
         lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565));
