@@ -27,11 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous;
-
-import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.LEFT;
-import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.MIDDLE;
-import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.RIGHT;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions.encoders;
 
 import android.util.Size;
 
@@ -39,7 +35,6 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -48,12 +43,14 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
-import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
+import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
 
 
 /*
@@ -69,8 +66,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Red_Distance", group="Test")
-public class Red_Distance extends LinearOpMode {
+@Autonomous(name="Auto_Red_Close", group="Test")
+public class Red_Close extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     int startingPos = 3; // Each corresponds to the quadrant one is starting at
@@ -131,10 +128,7 @@ public class Red_Distance extends LinearOpMode {
 
 
         // Zero Power Behavior
-        front_left.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        front_right.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        back_left.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        back_right.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
 
 
 
@@ -151,41 +145,44 @@ public class Red_Distance extends LinearOpMode {
                 .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
                 .build();
 
-        LeftPropProcessor leftPropProcessor = new LeftPropProcessor();
-        leftPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
+
+        RightPropProcessor rightPropProcessor = new RightPropProcessor();
+        rightPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
-                .addProcessors(tagProcessor,leftPropProcessor)
+                .addProcessors(tagProcessor,rightPropProcessor)
                 .build();
 
+        visionPortal.setProcessorEnabled(rightPropProcessor, true);
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
-        visionPortal.setProcessorEnabled(leftPropProcessor, true);
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.detectTeamElementleft(tagProcessor,leftPropProcessor,visionPortal);
+        objPos = AutoFunctions.detectTeamElementright(tagProcessor,rightPropProcessor,visionPortal);
         telemetry.addData("Obj Pos", objPos);
-        telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
+        telemetry.addData("left perc, middle perc:", rightPropProcessor.getPercents());
         telemetry.update();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                leftside.centerProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+
+
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.MIDDLE) {
+                rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
             }
 
 
-            if (leftPropProcessor.getPropLocation()==RIGHT) {
-                leftside.rightProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+            else if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT) {
+                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
             }
-            if (leftPropProcessor.getPropLocation()==LEFT) {
-                leftside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+            else  {
+                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
+                //AutoFunctions.redshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
 
 
             }

@@ -15,6 +15,20 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+//import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
+import java.util.List;
+
 import java.util.ArrayList;
 
 
@@ -49,7 +63,32 @@ public class AutoFunctions {
         //visionPortal.setProcessorEnabled(tagProcessor, true);
         return objPos;
     }
+public static double aprilTagDetectionRight(AprilTagProcessor tagProcessor, Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right, DcMotor linearSlideMotor_Left, DcMotor linearSlideMotor_Right, Servo arm, Servo door){
+    double leftIDposition = 0;
 
+    List<AprilTagDetection> currentDetections = tagProcessor.getDetections();
+    telemetry.addData("# AprilTags Detected", currentDetections.size());
+
+    // Step through the list of detections and display info for each one.
+    for (AprilTagDetection detection : currentDetections) {
+        if (detection.id == 4 || detection.id == 1) {
+
+            telemetry.addLine("Left Detected");
+            leftIDposition = detection.ftcPose.x;
+        }
+        else {
+            Movement.right(leftIDposition, telemetry, back_left, back_right, front_left, front_right);
+            if (detection.id == 4 || detection.id == 1) {
+                telemetry.addLine("Left Detected");
+                leftIDposition = detection.ftcPose.x;}
+            else {
+                telemetry.addLine("Left Detected");
+            }
+
+        } //END OF ELSE
+    }   // end for() loop
+    return leftIDposition;
+}
     public static int detectTeamElementright(AprilTagProcessor tagProcessor, RightPropProcessor rightPropProcessor, VisionPortal visionPortal){
         int objPos = 0;
         visionPortal.setProcessorEnabled(tagProcessor, false);
@@ -66,6 +105,7 @@ public class AutoFunctions {
         //visionPortal.setProcessorEnabled(tagProcessor, true);
         return objPos;
     }
+
 public static int getPropLocationleft(LeftPropProcessor leftPropProcessor) {
 
     CustomTypes.PropLocation propLocation = leftPropProcessor.getPropLocation();

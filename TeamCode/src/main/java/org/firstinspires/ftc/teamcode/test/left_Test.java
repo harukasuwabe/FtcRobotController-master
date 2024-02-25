@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.test;
 
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.LEFT;
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.MIDDLE;
@@ -49,15 +49,12 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
-import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
-import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 
 
 /*
@@ -73,8 +70,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Blue_Close", group="Test")
-public class Blue_Close extends LinearOpMode {
+@Autonomous(name="left_Test", group="Test")
+public class left_Test extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     int startingPos = 1; // Each corresponds to the quadrant one is starting at
@@ -85,7 +82,7 @@ public class Blue_Close extends LinearOpMode {
      * 4 = Red closer to parking
      * */
     int driveClawPos = 400;
-    int objPos = 0;
+    int objPos =0;
      /*
         Position of team object
         1 = left
@@ -105,7 +102,6 @@ public class Blue_Close extends LinearOpMode {
     private Servo door;
     private Servo arm;
     VisionPortal visionPortal;
-
     BNO055IMU imu = null;
 
     @Override
@@ -176,9 +172,7 @@ public class Blue_Close extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.getPropLocationleft(leftPropProcessor);
-        telemetry.addData("Obj Pos", objPos);
-        telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
+        telemetry.addData("Obj Pos", leftPropProcessor.getPropPosition());
         telemetry.update();
 
 
