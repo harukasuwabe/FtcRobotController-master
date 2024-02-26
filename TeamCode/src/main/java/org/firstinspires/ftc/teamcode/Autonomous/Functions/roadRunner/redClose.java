@@ -14,8 +14,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -90,5 +92,16 @@ public class redClose extends LinearOpMode {
         telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
         telemetry.update();
 
+        while (opModeIsActive()) {
+            if (leftPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
+                leftside.leftProp_RR(telemetry, drive);
+            }
+            if (leftPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
+                leftside.centerProp_RR(telemetry, drive);
+            }
+            if (leftPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
+                leftside.rightProp_RR(telemetry, drive);
+            }
+        }
     }
 }

@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.Autonomous.Functions;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -12,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -20,6 +25,33 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import android.util.Size;
 import java.util.ArrayList;
 public class rightside {
+    public static void rightProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+        Pose2d startPose = new Pose2d(15,59, Math.toRadians((90)));
+        sampleMecanumDrive.setPoseEstimate(startPose);
+        Trajectory rightprop = sampleMecanumDrive.trajectoryBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(24,23.5), Math.toRadians(270))
+                .build();
+
+        sampleMecanumDrive.followTrajectory(rightprop);
+    }
+    public static void leftProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+        Pose2d startPose = new Pose2d(15,59, Math.toRadians(90));
+        sampleMecanumDrive.setPoseEstimate(startPose);
+        Trajectory leftprop = sampleMecanumDrive.trajectoryBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(0,23.5), Math.toRadians(0))
+                .build();
+
+        sampleMecanumDrive.followTrajectory(leftprop);
+    }
+    public static void centerProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+        Pose2d startPose = new Pose2d(35,59, Math.toRadians(90));
+        sampleMecanumDrive.setPoseEstimate(startPose);
+        Trajectory centerprop = sampleMecanumDrive.trajectoryBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(12,24), Math.toRadians(90))
+                .build();
+
+        sampleMecanumDrive.followTrajectory(centerprop);
+    }
     public static void leftProp(Telemetry telemetry, DcMotor back_left, DcMotor back_right, DcMotor front_left, DcMotor front_right) throws InterruptedException {
 // in this code you should assume that the prop is on the left.
         Movement.backward(70,telemetry, back_left, back_right, front_left, front_right);
