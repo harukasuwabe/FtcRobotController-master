@@ -13,6 +13,8 @@ public class RoadRunner {
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedCloseRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(13,-31,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(17,-60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,-41, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -38,7 +40,7 @@ public class RoadRunner {
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedCloseLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(6,-30,Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(54.85,-43, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,-28, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -47,10 +49,18 @@ public class RoadRunner {
         sampleMecanumDrive.followTrajectory(RedCloseLeftProp);
     }
     public static void RedFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50,-73, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));//recheck the x starting position
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-35,-30,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-33,-30,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-38,-60,Math.toRadians(270)))//change if needed
+                .lineToLinearHeading(new Pose2d(54.85,-60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,-41, Math.toRadians(0)))
+//                  This is for the far
+//                .lineToLinearHeading(new Pose2d(-33,-30,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(-37,-12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -60,26 +70,38 @@ public class RoadRunner {
     }
 
     public static void RedFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50,-73, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-42,-28,Math.toRadians(270)))
-//                .forward(9.5)
-//                .strafeRight(24)
-//                .turn(Math.toRadians(180))
-//                .forward(36)
+                .lineToLinearHeading(new Pose2d(-38,-28,Math.toRadians(270)))
+                .lineToLinearHeading(new Pose2d(-38,-60,Math.toRadians(270)))
+                .lineToLinearHeading(new Pose2d(54.85,-60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
+
+                //this is for the far
+//                .lineToLinearHeading(new Pose2d(-38,-28,Math.toRadians(270)))
+//                .lineToLinearHeading(new Pose2d(-56,-43,Math.toRadians(270)))
+//                .lineToLinearHeading(new Pose2d(-40,-12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
                 .build();
         sampleMecanumDrive.followTrajectory(RedFarCenterProp);
     }
     public static void RedFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50,-73, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-43,-30,Math.toRadians(0)))
-//                .forward(9.5)
-//                .strafeRight(24)
-//                .turn(Math.toRadians(180))
-//                .forward(36)
+                .lineToLinearHeading(new Pose2d(-40,-30,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-38,-60,Math.toRadians(270)))
+                .lineToLinearHeading(new Pose2d(54.85,-60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
+                //This is going to be from the farther side
+//
+//                .lineToLinearHeading(new Pose2d(-40,-30,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(-37,-12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
+
                 .build();
         sampleMecanumDrive.followTrajectory(RedFarLeftProp);
     }
@@ -88,6 +110,7 @@ public class RoadRunner {
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(6,30,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,28, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -100,6 +123,7 @@ public class RoadRunner {
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(12,28,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -112,6 +136,7 @@ public class RoadRunner {
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(13,31,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(54.85,41, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -122,10 +147,18 @@ public class RoadRunner {
 
 
     public static void BlueFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50, 73, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-43,30,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-40,30,Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-38,60,Math.toRadians(270)))//change if needed
+                .lineToLinearHeading(new Pose2d(54.85,60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,41, Math.toRadians(0)))
+//                  This is for the far
+//                .lineToLinearHeading(new Pose2d(-40,30,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(-37,12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
 //                .forward(9.5)
 //                .strafeRight(24)
 //                .turn(Math.toRadians(180))
@@ -134,26 +167,37 @@ public class RoadRunner {
         sampleMecanumDrive.followTrajectory(BlueFarRightProp);
     }
     public static void BlueFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50, 73, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-42,28,Math.toRadians(90)))
-//                .forward(9.5)
-//                .strafeRight(24)
-//                .turn(Math.toRadians(180))
-//                .forward(36)
+                .lineToLinearHeading(new Pose2d(-38,28,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(-38,60,Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(54.85,60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+
+                //this is for the far
+//                .lineToLinearHeading(new Pose2d(-38,28,Math.toRadians(90)))
+//                .lineToLinearHeading(new Pose2d(-56,43,Math.toRadians(90)))
+//                .lineToLinearHeading(new Pose2d(-40,12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
                 .build();
         sampleMecanumDrive.followTrajectory(BlueFarCenterProp);
     }
     public static void BlueFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(-50, 73, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-35,30,Math.toRadians(180)))
-//                .forward(9.5)
-//                .strafeRight(24)
-//                .turn(Math.toRadians(180))
-//                .forward(36)
+                .lineToLinearHeading(new Pose2d(-33,30,Math.toRadians(180)))
+                .lineToLinearHeading(new Pose2d(-38,60,Math.toRadians(270)))
+                .lineToLinearHeading(new Pose2d(54.85,60, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                //This is going to be from the farther side
+//
+//                .lineToLinearHeading(new Pose2d(-33,30,Math.toRadians(180)))
+//                .lineToLinearHeading(new Pose2d(-37,12,Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,12, Math.toRadians(0)))
+//                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
                 .build();
         sampleMecanumDrive.followTrajectory(BlueFarLeftProp);
     }
