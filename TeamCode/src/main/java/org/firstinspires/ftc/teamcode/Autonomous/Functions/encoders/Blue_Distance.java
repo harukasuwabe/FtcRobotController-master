@@ -44,15 +44,13 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
-import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner.RoadRunner;
 import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
-import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
 
 
 /*
@@ -108,6 +106,7 @@ public class Blue_Distance extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
         params.angleUnit = BNO055IMU.AngleUnit.DEGREES; // sets angle degrees
@@ -167,7 +166,7 @@ public class Blue_Distance extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.detectTeamElementright(tagProcessor,rightPropProcessor,visionPortal);
+        objPos = AutoFunctions.getPropLocationright(rightPropProcessor);
         telemetry.addData("Obj Pos", objPos);
         telemetry.addData("left perc, middle perc:", rightPropProcessor.getPercents());
         telemetry.update();
@@ -176,25 +175,15 @@ public class Blue_Distance extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.MIDDLE) {
-                rightside.centerProp(telemetry, back_left,back_right,front_left,front_right);
-                //rightside.centerProp(telemetry, back_left, back_right, front_left, front_right);
-                //AutoFunctions.blueshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
+                RoadRunner.BlueFarLeftProp(telemetry, drive);
             }
-
-
-            else if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT) {
-                rightside.rightProp(telemetry, back_left, back_right, front_left, front_right);
-                //AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
-
+            if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
+                RoadRunner.BlueFarCenterProp(telemetry, drive);
             }
-            else  {
-                rightside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                //AutoFunctions.redshiftLong(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
-                //Movement.right(70, telemetry, back_left, back_right, front_left, front_right);
-
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
+                RoadRunner.BlueFarRightProp(telemetry, drive);
             }
-
         }
     }
 }

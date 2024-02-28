@@ -8,14 +8,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
-import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
+import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -72,35 +70,35 @@ public class redClose extends LinearOpMode {
                 .setLensIntrinsics(822.317f, 822.317f, 319.495f, 242.502f)
                 .build();
 
-        LeftPropProcessor leftPropProcessor = new LeftPropProcessor();
-        leftPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
+        RightPropProcessor rightPropProcessor = new RightPropProcessor();
+        rightPropProcessor.setDetectionColor(AutoFunctions.detectRed(startingPos));
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .setCameraResolution(new Size(640, 480))
-                .addProcessors(tagProcessor,leftPropProcessor)
+                .addProcessors(tagProcessor,rightPropProcessor)
                 .build();
 
 
         telemetry.addData("Detect Red", AutoFunctions.detectRed(startingPos));
 
-        visionPortal.setProcessorEnabled(leftPropProcessor, true);
+        visionPortal.setProcessorEnabled(rightPropProcessor, true);
 
         waitForStart();
         runtime.reset();
-        objPos = AutoFunctions.getPropLocationleft(leftPropProcessor);
+        objPos = AutoFunctions.getPropLocationright(rightPropProcessor);
         telemetry.addData("Obj Pos", objPos);
-        telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
+        telemetry.addData("left perc, middle perc:", rightPropProcessor.getPercents());
         telemetry.update();
 
         while (opModeIsActive()) {
-            if (leftPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                leftside.leftProp_RR(telemetry, drive);
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
+                RoadRunner.RedCloseLeftProp(telemetry, drive);
             }
-            if (leftPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                leftside.centerProp_RR(telemetry, drive);
+            if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
+                RoadRunner.RedCloseCenterProp(telemetry, drive);
             }
-            if (leftPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                leftside.rightProp_RR(telemetry, drive);
+            if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
+                RoadRunner.RedCloseRightProp(telemetry, drive);
             }
         }
     }

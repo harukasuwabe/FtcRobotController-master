@@ -63,7 +63,6 @@ public class RightPropProcessor implements VisionProcessor, CameraStreamSource {
     public void setDetectionColor(boolean detectRed) {
         this.detectingRed = detectRed;
     }
-
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
         Imgproc.cvtColor(frame, testMat, Imgproc.COLOR_RGB2HSV);

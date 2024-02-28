@@ -49,15 +49,12 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.rightside;
+import org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner.RoadRunner;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
-import org.firstinspires.ftc.teamcode.HSV.PropThreshold;
-import org.firstinspires.ftc.teamcode.Movement;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 
 
 /*
@@ -117,6 +114,7 @@ public class Blue_Close extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         sleep(1000);
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
@@ -187,20 +185,16 @@ public class Blue_Close extends LinearOpMode {
         while (opModeIsActive()) {
 
             if (leftPropProcessor.getPropLocation()==LEFT) {
-                leftside.leftProp(telemetry, back_left,back_right,front_left,front_right);
-                //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                RoadRunner.BlueCloseLeftProp(telemetry, drive);
             }
 
 
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                leftside.centerProp(telemetry, back_left, back_right, front_left, front_right);
-                //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
+                RoadRunner.BlueCloseCenterProp(telemetry, drive);
 
             }
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                leftside.rightProp(telemetry, back_left, back_right, front_left, front_right);
-                //AutoFunctions.blueshiftShort(telemetry, back_left, back_right, front_left, front_right, linearSlideMotor_Left, linearSlideMotor_Right, arm, door);
-
+                RoadRunner.BlueCloseRightProp(telemetry, drive);
 
             }
         }

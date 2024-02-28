@@ -1,27 +1,17 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Functions;
 
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
-import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class leftside {
-    public static void rightProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
-        Pose2d startPose = new Pose2d(15,-59, Math.toRadians((270)));
-        sampleMecanumDrive.setPoseEstimate(startPose);
-        Trajectory rightprop = sampleMecanumDrive.trajectoryBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(24,-20.5), Math.toRadians(0))
-                .build();
 
-        sampleMecanumDrive.followTrajectory(rightprop);
-    }
+
     public static void leftProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
         Pose2d startPose = new Pose2d(15,-59, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
