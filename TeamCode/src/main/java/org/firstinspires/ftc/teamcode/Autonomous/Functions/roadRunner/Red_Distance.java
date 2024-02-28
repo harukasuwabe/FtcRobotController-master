@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous.Functions.encoders;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner;
 
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.LEFT;
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.MIDDLE;
@@ -175,17 +175,17 @@ public class Red_Distance extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.RedFarCenterProp(telemetry, drive);
+                RoadRunner.RedFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
 
 
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.RedFarRightProp(telemetry, drive);
+                RoadRunner.RedFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
 
             }
             if (leftPropProcessor.getPropLocation()==LEFT) {
                 leftside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                RoadRunner.RedFarLeftProp(telemetry, drive);
+                RoadRunner.RedFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
 
             }
         }

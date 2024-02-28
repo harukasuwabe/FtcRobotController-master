@@ -1,28 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-// import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-// import com.qualcomm.robotcore.hardware.DcMotor;
-// import com.qualcomm.robotcore.hardware.DcMotorEx;
-// import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+
 
 public class Movement {
 
     // todo: write your code here
-    // private static DcMotor motorFrontRight;
-    // private static DcMotor motorFrontLeft;
-    // private static DcMotor motorBackLeft;
-    // private static DcMotor motorBackRight;
-    // private static DcMotor ArmMotor;
-    // private static Servo claw;
 
 
     static double rotations;
-    static double ticks;
+
 
 
     public static void left(double distance, Telemetry telemetry, DcMotor motorBackLeft, DcMotor motorBackRight, DcMotor motorFrontLeft, DcMotor motorFrontRight) {

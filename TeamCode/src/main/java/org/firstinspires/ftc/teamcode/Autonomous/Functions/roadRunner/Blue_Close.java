@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous.Functions.encoders;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner;
 
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.LEFT;
 import static org.firstinspires.ftc.teamcode.util.CustomTypes.PropLocation.MIDDLE;
@@ -49,7 +49,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner.RoadRunner;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -185,16 +184,16 @@ public class Blue_Close extends LinearOpMode {
         while (opModeIsActive()) {
 
             if (leftPropProcessor.getPropLocation()==LEFT) {
-                RoadRunner.BlueCloseLeftProp(telemetry, drive);
+                RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
 
 
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.BlueCloseCenterProp(telemetry, drive);
+                RoadRunner.BlueCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
 
             }
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.BlueCloseRightProp(telemetry, drive);
+                RoadRunner.BlueCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
 
             }
         }

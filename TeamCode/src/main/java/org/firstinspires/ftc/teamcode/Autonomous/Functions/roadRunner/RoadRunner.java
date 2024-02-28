@@ -2,13 +2,15 @@ package org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class RoadRunner {
 
-    public static void RedCloseRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedCloseRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedCloseRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -20,9 +22,14 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedCloseRightProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void RedCloseCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedCloseCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedCloseCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -33,9 +40,14 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedCloseCenterProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void RedCloseLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedCloseLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedCloseLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -46,9 +58,14 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedCloseLeftProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void RedFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));//recheck the x starting position
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -66,10 +83,15 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedFarRightProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
 
-    public static void RedFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -85,9 +107,14 @@ public class RoadRunner {
 //                .lineToLinearHeading(new Pose2d(54.85,-12, Math.toRadians(0)))
 //                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedFarCenterProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void RedFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void RedFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38,-73, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory RedFarLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -103,9 +130,14 @@ public class RoadRunner {
 //                .lineToLinearHeading(new Pose2d(54.85,-35, Math.toRadians(0)))
 
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(RedFarLeftProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void BlueCloseRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueCloseRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -116,9 +148,14 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(BlueCloseRightProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void BlueCloseCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueCloseCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -129,9 +166,12 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(BlueCloseCenterProp);
     }
-    public static void BlueCloseLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueCloseLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(17, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueCloseLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -142,11 +182,16 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(BlueCloseLeftProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
 
 
-    public static void BlueFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueFarRightProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarRightProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -164,9 +209,14 @@ public class RoadRunner {
 //                .turn(Math.toRadians(180))
 //                .forward(36)
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(BlueFarRightProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void BlueFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueFarCenterProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarCenterProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -182,9 +232,14 @@ public class RoadRunner {
 //                .lineToLinearHeading(new Pose2d(54.85,12, Math.toRadians(0)))
 //                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                .build();
         sampleMecanumDrive.followTrajectory(BlueFarCenterProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
-    public static void BlueFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
+    public static void BlueFarLeftProp(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
         Pose2d startPose = new Pose2d(-38, 73, Math.toRadians(90));
         sampleMecanumDrive.setPoseEstimate(startPose);
         Trajectory BlueFarLeftProp = sampleMecanumDrive.trajectoryBuilder(startPose)
@@ -199,7 +254,13 @@ public class RoadRunner {
 //                .lineToLinearHeading(new Pose2d(54.85,12, Math.toRadians(0)))
 //                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
                 .build();
+        Trajectory slide = sampleMecanumDrive.trajectoryBuilder(new Pose2d(54.85,35, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(54.85,35, Math.toRadians(0)))
+                        .build();
+
         sampleMecanumDrive.followTrajectory(BlueFarLeftProp);
+        Movement.linearSlides(900, telemetry, motorLinearSlideLeft, motorLinearSlideRight);
+        sampleMecanumDrive.followTrajectory(slide);
     }
 
 

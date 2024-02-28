@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous.Functions.encoders;
+package org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner;
 
 import android.util.Size;
 
@@ -44,7 +44,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner.RoadRunner;
 import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.CustomTypes;
@@ -176,13 +175,13 @@ public class Blue_Distance extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.BlueFarLeftProp(telemetry, drive);
+                RoadRunner.BlueFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.BlueFarCenterProp(telemetry, drive);
+                RoadRunner.BlueFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.BlueFarRightProp(telemetry, drive);
+                RoadRunner.BlueFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
         }
     }

@@ -92,13 +92,13 @@ public class redClose extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.RedCloseLeftProp(telemetry, drive);
+                RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.RedCloseCenterProp(telemetry, drive);
+                RoadRunner.RedCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.RedCloseRightProp(telemetry, drive);
+                RoadRunner.RedCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
             }
         }
     }
