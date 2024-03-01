@@ -184,16 +184,16 @@ public class Blue_Close extends LinearOpMode {
         while (opModeIsActive()) {
 
             if (leftPropProcessor.getPropLocation()==LEFT) {
-                RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
 
 
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.BlueCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
 
             }
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.BlueCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
 
             }
         }

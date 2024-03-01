@@ -175,13 +175,13 @@ public class Blue_Distance extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.BlueFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.BlueFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.BlueFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.BlueFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
         }
     }

@@ -49,7 +49,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.roadRunner.RoadRunner;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -175,17 +174,17 @@ public class Red_Distance extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.RedFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
 
 
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.RedFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
 
             }
             if (leftPropProcessor.getPropLocation()==LEFT) {
                 leftside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                RoadRunner.RedFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
 
             }
         }

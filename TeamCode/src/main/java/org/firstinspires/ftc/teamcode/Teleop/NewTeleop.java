@@ -1,15 +1,10 @@
 package org.firstinspires.ftc.teamcode.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-
-import org.firstinspires.ftc.teamcode.Movement;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 
 @TeleOp(name = "NewTeleop")
@@ -24,7 +19,7 @@ public class NewTeleop extends LinearOpMode {
     private Servo door;
     private Servo airplane;
     private Servo arm;
-
+    private DistanceSensor dsensor;
 
     private final int SLIDE_UP_POSITION = 1000;  // Adjust this value
     private final int SLIDE_DOWN_POSITION = 0;   // Adjust this value
@@ -41,7 +36,7 @@ public class NewTeleop extends LinearOpMode {
         airplane = hardwareMap.servo.get("airplane");
         arm = hardwareMap.servo.get("arm");
         intake = hardwareMap.dcMotor.get("intake");
-
+        dsensor = (DistanceSensor) hardwareMap.get("dsensor");
 
         linearSlideMotor_Right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlideMotor_Left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -57,8 +52,10 @@ public class NewTeleop extends LinearOpMode {
             // Mecanum drive code
             double left_stick_x = -(gamepad1.left_stick_x);
             double left_stick_y = gamepad1.left_stick_y;
-            double Theta = Math.atan2(left_stick_x, left_stick_y);
-            double power = Math.hypot(left_stick_x, left_stick_y);
+            double left_stick_x_n = left_stick_x*left_stick_x*left_stick_x;
+            double left_stick_y_n = left_stick_y*left_stick_y*left_stick_y;
+            double Theta = Math.atan2(left_stick_x_n, left_stick_y_n);
+            double power = Math.hypot(left_stick_x_n, left_stick_y_n);
             double sin = Math.sin(Theta - Math.PI / 4);
             double cos = Math.cos(Theta - Math.PI / 4);
             double max = Math.max(Math.abs(cos), Math.abs(sin));
@@ -73,12 +70,13 @@ public class NewTeleop extends LinearOpMode {
             linearSlideMotor_Right.setPower(linearPower);
 
 
-            if ((power + Math.abs(left_stick_x)) > 1) {
-                leftfrontpower /= power + left_stick_x;
-                rightfrontpower /= power + left_stick_x;
-                leftrearpower /= power + left_stick_x;
-                rightrearpower /= power + left_stick_x;
+            if ((power + Math.abs(left_stick_x_n)) > 1) {
+                leftfrontpower /= power + left_stick_x_n;
+                rightfrontpower /= power + left_stick_x_n;
+                leftrearpower /= power + left_stick_x_n;
+                rightrearpower /= power + left_stick_x_n;
             }
+
             rx = gamepad1.right_stick_x/max;
             ///leftfrontpower = (rotX+rotY);
             ///rightfrontpower = (-rotX+rotY);
@@ -157,7 +155,20 @@ public class NewTeleop extends LinearOpMode {
             }
 
             if (gamepad2.left_bumper){
-                Movement.linearSlides(0, telemetry, linearSlideMotor_Left, linearSlideMotor_Right);
+                if (linearSlideMotor_Right.getCurrentPosition()>0 && linearSlideMotor_Left.getCurrentPosition()>0){
+                    if (gamepad1.a){
+                        telemetry.update();
+                        linearSlideMotor_Right.setPower(-0.5);
+                        linearSlideMotor_Left.setPower(-0.5);
+                    }
+                    else {
+                        linearSlideMotor_Right.setPower(0);
+                        linearSlideMotor_Left.setPower(0);
+                    }}
+                back_left.setPower(leftrearpower*0.5);
+                front_right.setPower(rightfrontpower*0.5);
+                front_left.setPower(leftfrontpower*0.5);
+                back_right.setPower(rightrearpower*0.5);
             }
             // Telemetry for debugging
             telemetry.addData("Front Left Pow", front_left.getPower());

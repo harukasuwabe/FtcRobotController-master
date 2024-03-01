@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 public class leftside {
 
-
     public static void leftProp_RR(Telemetry telemetry, SampleMecanumDrive sampleMecanumDrive){
         Pose2d startPose = new Pose2d(15,-59, Math.toRadians(270));
         sampleMecanumDrive.setPoseEstimate(startPose);

@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
 import org.firstinspires.ftc.teamcode.HSV.RightPropProcessor;
+import org.firstinspires.ftc.teamcode.Movement;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.CustomTypes;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -120,16 +121,17 @@ public class redClose extends LinearOpMode {
         telemetry.addData("Obj Pos", objPos);
         telemetry.addData("left perc, middle perc:", rightPropProcessor.getPercents());
         telemetry.update();
+        Movement.reset_linear_encoders(linearSlideMotor_Left, linearSlideMotor_Right);
 
         while (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.RedCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.RedCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right);
+                RoadRunner.RedCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
         }
     }

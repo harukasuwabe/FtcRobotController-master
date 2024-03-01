@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
 public class Movement {
@@ -204,7 +205,7 @@ public class Movement {
     }
 
     public static void linearSlides(int ticks, Telemetry telemetry, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
-        reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
+        //reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
         //SET TARGET POSITION
         motorLinearSlideLeft.setTargetPosition((int)ticks);
         motorLinearSlideRight.setTargetPosition((int)ticks);
@@ -215,6 +216,12 @@ public class Movement {
         ((DcMotorEx) motorLinearSlideLeft).setPower(1);
         ((DcMotorEx) motorLinearSlideRight).setPower(-1);
     }
+    public static void distance(Telemetry telemetry, DistanceSensor dsensor){
+        double value = dsensor.getDistance(DistanceUnit.CM);
+        telemetry.addData( "Distance:", value);
+        telemetry.update();
+    }
+
 }
 
 
