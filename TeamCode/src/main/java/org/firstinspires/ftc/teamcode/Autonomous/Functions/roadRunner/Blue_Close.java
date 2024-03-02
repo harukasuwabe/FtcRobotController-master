@@ -181,7 +181,7 @@ public class Blue_Close extends LinearOpMode {
 
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
 
             if (leftPropProcessor.getPropLocation()==LEFT) {
                 RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);

@@ -123,7 +123,7 @@ public class redClose extends LinearOpMode {
         telemetry.update();
         Movement.reset_linear_encoders(linearSlideMotor_Left, linearSlideMotor_Right);
 
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
                 RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
             }
