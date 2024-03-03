@@ -48,7 +48,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Autonomous.Functions.AutoFunctions;
-import org.firstinspires.ftc.teamcode.Autonomous.Functions.leftside;
 import org.firstinspires.ftc.teamcode.HSV.LeftPropProcessor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -100,6 +99,8 @@ public class Red_Distance extends LinearOpMode {
     private DcMotor linearSlideMotor_Right;
     private Servo door;
     private Servo arm;
+    private Servo arm2;
+
     VisionPortal visionPortal;
 
     BNO055IMU imu = null;
@@ -122,6 +123,7 @@ public class Red_Distance extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "back_right");
         door = hardwareMap.get(Servo.class, "door");
         arm = hardwareMap.get(Servo.class, "arm");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
         linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
         linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
@@ -172,19 +174,18 @@ public class Red_Distance extends LinearOpMode {
         telemetry.update();
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
             if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.RedFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
 
 
             if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.RedFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
 
             }
             if (leftPropProcessor.getPropLocation()==LEFT) {
-                leftside.leftProp(telemetry, back_left, back_right, front_left, front_right);
-                RoadRunner.RedFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
 
             }
         }

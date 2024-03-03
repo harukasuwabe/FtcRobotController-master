@@ -100,6 +100,7 @@ public class Blue_Close extends LinearOpMode {
     private DcMotor linearSlideMotor_Right;
     private Servo door;
     private Servo arm;
+    private Servo arm2;
     VisionPortal visionPortal;
 
     BNO055IMU imu = null;
@@ -127,6 +128,7 @@ public class Blue_Close extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "back_right");
         door = hardwareMap.get(Servo.class, "door");
         arm = hardwareMap.get(Servo.class, "arm");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
         linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
         linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
@@ -177,25 +179,21 @@ public class Blue_Close extends LinearOpMode {
         telemetry.addData("Obj Pos", objPos);
         telemetry.addData("left perc, middle perc:", leftPropProcessor.getPercents());
         telemetry.update();
-
+        arm.setPosition(0.5);
+        arm2.setPosition(-0.5);
 
 
         // run until the end of the match (driver presses STOP)
-        if (opModeIsActive()) {
 
-            if (leftPropProcessor.getPropLocation()==LEFT) {
-                RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
-            }
+        if (leftPropProcessor.getPropLocation()==LEFT) {
+            RoadRunner.BlueCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
+        } else if (leftPropProcessor.getPropLocation()==MIDDLE) {
+            RoadRunner.BlueCloseCenterProp(telemetry, drive, linearSlideMotor_Left, linearSlideMotor_Right, door, arm, arm2);
 
+        } else if (leftPropProcessor.getPropLocation()==RIGHT) {
+            RoadRunner.BlueCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
 
-            if (leftPropProcessor.getPropLocation()==MIDDLE) {
-                RoadRunner.BlueCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
-
-            }
-            if (leftPropProcessor.getPropLocation()==RIGHT) {
-                RoadRunner.BlueCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
-
-            }
         }
+
     }
 }

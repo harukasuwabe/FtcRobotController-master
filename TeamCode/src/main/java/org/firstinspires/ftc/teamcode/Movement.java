@@ -216,6 +216,23 @@ public class Movement {
         ((DcMotorEx) motorLinearSlideLeft).setPower(1);
         ((DcMotorEx) motorLinearSlideRight).setPower(-1);
     }
+
+    public static void hang( Telemetry telemetry, DcMotor motorLinearSlideLeft, DcMotor motorLinearSlideRight){
+        //reset_linear_encoders(motorLinearSlideLeft, motorLinearSlideRight);
+        //SET TARGET POSITION
+//        motorLinearSlideLeft.setTargetPosition(0);
+//        motorLinearSlideRight.setTargetPosition(0);
+        //RUN TO POSITION
+//        motorLinearSlideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        motorLinearSlideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motorLinearSlideLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motorLinearSlideRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //POWER
+        ((DcMotorEx) motorLinearSlideLeft).setPower(-1);
+        ((DcMotorEx) motorLinearSlideRight).setPower(-1);
+    }
+
     public static void distance(Telemetry telemetry, DistanceSensor dsensor){
         double value = dsensor.getDistance(DistanceUnit.CM);
         telemetry.addData( "Distance:", value);

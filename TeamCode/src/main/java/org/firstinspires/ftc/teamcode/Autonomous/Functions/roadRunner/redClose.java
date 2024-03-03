@@ -53,6 +53,8 @@ public class redClose extends LinearOpMode {
     private DcMotor linearSlideMotor_Right;
     private Servo door;
     private Servo arm;
+    private Servo arm2;
+
     VisionPortal visionPortal;
 
     BNO055IMU imu = null;
@@ -75,6 +77,7 @@ public class redClose extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "back_right");
         door = hardwareMap.get(Servo.class, "door");
         arm = hardwareMap.get(Servo.class, "arm");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
         linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
         linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
@@ -125,13 +128,13 @@ public class redClose extends LinearOpMode {
 
         if (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedCloseLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.RedCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedCloseCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.RedCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.RedCloseRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
         }
     }

@@ -4,7 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.teamcode.Movement;
 
 
 @TeleOp(name = "NewTeleop")
@@ -19,7 +20,9 @@ public class NewTeleop extends LinearOpMode {
     private Servo door;
     private Servo airplane;
     private Servo arm;
-    private DistanceSensor dsensor;
+    private Servo arm2;
+
+//    private DistanceSensor dsensor;
 
     private final int SLIDE_UP_POSITION = 1000;  // Adjust this value
     private final int SLIDE_DOWN_POSITION = 0;   // Adjust this value
@@ -35,8 +38,9 @@ public class NewTeleop extends LinearOpMode {
         door = hardwareMap.servo.get("door");
         airplane = hardwareMap.servo.get("airplane");
         arm = hardwareMap.servo.get("arm");
+        arm2 = hardwareMap.servo.get("arm2");
         intake = hardwareMap.dcMotor.get("intake");
-        dsensor = (DistanceSensor) hardwareMap.get("dsensor");
+//        dsensor = (DistanceSensor) hardwareMap.get("dsensor");
 
         linearSlideMotor_Right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearSlideMotor_Left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -45,7 +49,6 @@ public class NewTeleop extends LinearOpMode {
         linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
         intake.setDirection(DcMotor.Direction.REVERSE);
 
-            arm.setPosition(0);
         waitForStart();
 
         while (opModeIsActive()) {
@@ -65,7 +68,7 @@ public class NewTeleop extends LinearOpMode {
             double leftrearpower = sin * power + rx;
             double rightrearpower = cos * power + rx;
             double linearPower = gamepad2.right_stick_y;
-            int maxExtention = 2200;
+            int maxExtension = 2200;
             linearSlideMotor_Left.setPower(linearPower);
             linearSlideMotor_Right.setPower(linearPower);
 
@@ -92,8 +95,8 @@ public class NewTeleop extends LinearOpMode {
             back_right.setPower(Math.cbrt(-rightrearpower));
 
 
-            //new linnear slide code
-            if (linearSlideMotor_Right.getCurrentPosition()<maxExtention && linearSlideMotor_Left.getCurrentPosition()<maxExtention){
+            //new linear slide code
+            if (linearSlideMotor_Right.getCurrentPosition()<maxExtension && linearSlideMotor_Left.getCurrentPosition()<maxExtension){
                 if (gamepad1.y){
                     telemetry.update();
                     linearSlideMotor_Right.setPower(1);
@@ -109,7 +112,7 @@ public class NewTeleop extends LinearOpMode {
                 linearSlideMotor_Left.setPower(0);
             }
 
-            if (linearSlideMotor_Right.getCurrentPosition()>0 && linearSlideMotor_Left.getCurrentPosition()>0){
+            if (linearSlideMotor_Right.getCurrentPosition()>-1300 && linearSlideMotor_Left.getCurrentPosition()>-1300){
                 if (gamepad1.a){
                     telemetry.update();
                     linearSlideMotor_Right.setPower(-1);
@@ -126,10 +129,10 @@ public class NewTeleop extends LinearOpMode {
             }
 
             if (gamepad2.dpad_right) {
-                door.setPosition(1);
+                door.setPosition(-1);
             }
             if (gamepad2.dpad_left){
-                door.setPosition(-1);
+                door.setPosition(0);
             }
             if (gamepad1.left_bumper){
                 airplane.setPosition(-1);
@@ -140,10 +143,13 @@ public class NewTeleop extends LinearOpMode {
 
             if (gamepad2.dpad_up){
                 arm.setPosition(-1);
+                arm2.setPosition(1);
+
             }
 
             if (gamepad2.dpad_down){
-                arm.setPosition(0.7);
+                arm.setPosition(0.5);
+                arm2.setPosition(-0.5);
             }
 
             if (gamepad2.b){
@@ -155,7 +161,7 @@ public class NewTeleop extends LinearOpMode {
             }
 
             if (gamepad2.left_bumper){
-                if (linearSlideMotor_Right.getCurrentPosition()>0 && linearSlideMotor_Left.getCurrentPosition()>0){
+                if (linearSlideMotor_Right.getCurrentPosition()>-1300 && linearSlideMotor_Left.getCurrentPosition()>-1300){
                     if (gamepad1.a){
                         telemetry.update();
                         linearSlideMotor_Right.setPower(-0.5);
@@ -170,6 +176,9 @@ public class NewTeleop extends LinearOpMode {
                 front_left.setPower(leftfrontpower*0.5);
                 back_right.setPower(rightrearpower*0.5);
             }
+            if (gamepad2.right_bumper){
+               Movement.hang(telemetry, linearSlideMotor_Left,linearSlideMotor_Right);
+                         }
             // Telemetry for debugging
             telemetry.addData("Front Left Pow", front_left.getPower());
             telemetry.addData("Back Left Pow", back_left.getPower());

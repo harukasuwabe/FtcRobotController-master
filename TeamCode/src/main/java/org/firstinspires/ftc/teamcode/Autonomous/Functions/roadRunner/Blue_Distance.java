@@ -96,6 +96,8 @@ public class Blue_Distance extends LinearOpMode {
     private DcMotor linearSlideMotor_Right;
     private Servo door;
     private Servo arm;
+    private Servo arm2;
+
     VisionPortal visionPortal;
 
     BNO055IMU imu = null;
@@ -118,6 +120,7 @@ public class Blue_Distance extends LinearOpMode {
         back_right = hardwareMap.get(DcMotor.class, "back_right");
         door = hardwareMap.get(Servo.class, "door");
         arm = hardwareMap.get(Servo.class, "arm");
+        arm2 = hardwareMap.get(Servo.class, "arm2");
         linearSlideMotor_Right = hardwareMap.dcMotor.get("linearSlideMotor_right");
         linearSlideMotor_Left = hardwareMap.dcMotor.get("linearSlideMotor_left");
         linearSlideMotor_Right.setDirection(DcMotor.Direction.REVERSE);
@@ -173,15 +176,15 @@ public class Blue_Distance extends LinearOpMode {
 
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        if (opModeIsActive()) {
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.LEFT){
-                RoadRunner.BlueFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.BlueFarLeftProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm,arm2);
             }
             if (rightPropProcessor.getPropLocation() == CustomTypes.PropLocation.MIDDLE){
-                RoadRunner.BlueFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.BlueFarCenterProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
             if (rightPropProcessor.getPropLocation()== CustomTypes.PropLocation.RIGHT){
-                RoadRunner.BlueFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm);
+                RoadRunner.BlueFarRightProp(telemetry, drive, linearSlideMotor_Left,linearSlideMotor_Right, door, arm, arm2);
             }
         }
     }
